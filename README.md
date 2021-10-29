@@ -1,4 +1,4 @@
-![](https://cdn.discordapp.com/attachments/831180817064656907/865166680483954708/MODERN_LEVELS_1.png)
+![](https://cdn.discordapp.com/attachments/831180817064656907/903720885641437235/MODERN_LEVELS.png)
 <p align="center">
   <a href="https://discord.gg/E56eZdNjK4">
     <img src="https://discordapp.com/api/guilds/809362745354354688/widget.png?style=shield" alt="Discord Server">
