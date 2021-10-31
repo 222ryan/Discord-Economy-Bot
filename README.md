@@ -12,18 +12,21 @@ Please be aware of a few things. You must use `Python v3.5` and up. You will als
 	  
 *Running into problems? Want to submit a bug report or suggestion? Join our [Support Server](https://discord.gg/E56eZdNjK4)*
 
-# Rank Card
-![](https://cdn.discordapp.com/attachments/831180817064656907/865171009207009280/MODERN_LEVELS_4.png)
-`Modern Levels` comes with a Rank Card which each user can customise their `Background`, `XPColour` or `Profile Picture Shape`.
+# Features
+![](https://cdn.discordapp.com/attachments/831180817064656907/904430488641474650/MODERN_LEVELS_1.png)
 
-The Rank Card contains the following:
 | Content   | Information |
 | ------------- | ------------- |
-| Level  | Shows the users current level for that server  |
-| XP Bar  | Shows the user their current and remaining xp until their next level  |
-| Rank        | Shows the users current placement on the leaderboard for that server         |
+| Money System  | Modern Economy has a fully setup money system  |
+| Modern Levels Integration  | Modern Economy works with the same Database as Modern Levels  |
+| Gambling/Betting      | Modern Economy includes Gambling/Betting commands to test their odds of either winning more money, or losing         |
+| Jobs System  | Jobs allow users to own their own buisnesses and earn money Daily depending on their Jobs Level  |
+| Begging  | Modern Economy includes a begging system that consists of positive or negative outcomes, and in some cases has other players robbing you  |
+
+**Note:** Modern Economy is in *early stages*, bugs are to be expected and the feature count will be low, but overtime bugs will be patched and the bot will expand!
+
 # Addons
-![](https://cdn.discordapp.com/attachments/831180817064656907/865170540750045184/MODERN_LEVELS_3.png)
+![](https://cdn.discordapp.com/attachments/831180817064656907/904431906651787316/MODERN_LEVELS_2.png)
 *`Addons` are coming soon!*
 
 
