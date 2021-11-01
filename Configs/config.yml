@@ -1,0 +1,84 @@
+# ======================================================================================
+#                             WELCOME TO THE CONFIG
+#                                      FOR
+#                                 MODERN ECONOMY
+# ======================================================================================
+# NOTE: BOT_TOKEN & MONGO CLIENT DETAILS ARE STORED IN THE .env FILE!
+# The prefix for the bots commands
+Prefix: "!"
+
+# Set what the bot is currently playing
+bot_status_text: "[!] | Modern Economy"
+
+# IDLE, DND, ONLINE, OFFLINE
+bot_activity: online
+
+# The ID of the user who owns this bot (In most cases, that'll be you)
+bot_owner_id: 512760269764820993
+
+# Disable / Enable the bot from sending the private message when joining a guild (True/False)
+private_message: True
+
+
+# ======================================================================================
+#                                     MONEY
+# ======================================================================================
+# How much money a user will earn when they get added to the database
+starting_money: 100
+
+# Currency Type (e.g $100)
+currency_type: $
+
+# How much money the user should receive from the Daily Command
+daily: 100
+
+# ======================================================================================
+#                                   JOBS
+# ======================================================================================
+
+# The starting daily income for 'Shop' Job
+starting_shop_income: 100
+
+# How much money a user needs to start a Shop Job
+shop_money_requirement: 300
+
+
+# ======================================================================================
+#                                  LEADERBOARD
+# ======================================================================================
+# Amount of users to be shown on the leaderboard
+leaderboard_amount: 10
+
+# Sets aliases for the leaderboard command
+leaderboard_alias: ['lb', 'leader', 'rankings']
+
+
+# ======================================================================================
+#                                   EMBED
+# ======================================================================================
+# Rank Embed Colour | Must Be Hex Notation
+rank_embed_colour: 0x4863A0
+
+# Leaderboard Embed Colour | Must Be Hex Notation (Replace # with 0x)
+leaderboard_embed_colour: 0xffffff
+
+# Embed Colour | Must Be Hex Notation
+embed_colour: 0xffffff
+
+# Error Embed Colour | Must Be Hex Notation
+error_embed_colour: 0x4863A0
+
+# Success Embed Colour | Must Be Hex Notation
+success_embed_colour: 0x4863A0
+
+
+# ======================================================================================
+#                                     HELP
+# ======================================================================================
+# NOTE: REQUIRES Extras+ ADDON!
+help_command: True
+
+
+# ======================================================================================
+#                                    THE END
+# ======================================================================================
