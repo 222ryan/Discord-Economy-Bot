@@ -31,7 +31,7 @@ class Gamble(commands.Cog):
         try:
             stats = economy.find_one({"guildid": ctx.guild.id, "id": ctx.author.id})
             money = stats['money']
-            bet_money = int(amount) * 2
+            bet_money = int(amount)
             if int(money) < int(amount):
                 embed = discord.Embed(description=":x: You have insufficient funds!")
                 embed.add_field(name="Balance:", value=f"`{currency}{money}`")
@@ -55,9 +55,9 @@ class Gamble(commands.Cog):
                     await message.edit(embed=embed)
                 else:
                     economy.update_one({"guildid": ctx.guild.id, "id": ctx.author.id},
-                                       {"$set": {"money": money - bet_money / 2}})
-                    embed.add_field(name="LOSS!", value=f"You lost `{currency}{bet_money / 2}`")
-                    embed.add_field(name="Balance:", value=f"`{currency}{money - int(bet_money) / 2}`")
+                                       {"$set": {"money": money - bet_money}})
+                    embed.add_field(name="LOSS!", value=f"You lost `{currency}{bet_money}`")
+                    embed.add_field(name="Balance:", value=f"`{currency}{money - int(bet_money)}`")
                     await message.edit(embed=embed)
                     return
             elif bet.lower() == "black":
@@ -76,9 +76,9 @@ class Gamble(commands.Cog):
                     await message.edit(embed=embed)
                 else:
                     economy.update_one({"guildid": ctx.guild.id, "id": ctx.author.id},
-                                       {"$set": {"money": money - bet_money / 2}})
-                    embed.add_field(name="LOSS!", value=f"You lost `{currency}{bet_money / 2}`")
-                    embed.add_field(name="Balance:", value=f"`{currency}{money - int(bet_money) / 2}`")
+                                       {"$set": {"money": money - bet_money}})
+                    embed.add_field(name="LOSS!", value=f"You lost `{currency}{bet_money}`")
+                    embed.add_field(name="Balance:", value=f"`{currency}{money - int(bet_money)}`")
                     await message.edit(embed=embed)
                     return
 
