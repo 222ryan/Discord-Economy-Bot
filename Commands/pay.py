@@ -1,3 +1,5 @@
+import re
+
 import discord
 from discord.ext import commands
 from ruamel.yaml import YAML
@@ -22,6 +24,11 @@ class Pay(commands.Cog):
             member = ctx.author
         if message is None:
             message = f"There was no message attached to this payment!"
+        new_amount = re.search("-", amount)
+        if amount is None or new_amount:
+            embed = discord.Embed(description=":x: You must state how much you want to pay!")
+            await ctx.send(embed=embed)
+            return
         try:
             author = economy.find_one({"guildid": ctx.guild.id, "id": ctx.author.id})
             stats = economy.find_one({"guildid": ctx.guild.id, "id": member.id})

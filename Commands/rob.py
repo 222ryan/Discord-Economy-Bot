@@ -38,7 +38,14 @@ class rob(commands.Cog):
                 users.append(doc['id'])
             if ctx.author.id in users:
                 users.remove(ctx.author.id)
+
             user = random.choice(users)
+            userstats = economy.find_one({"guildid": ctx.guild.id, "id": user})
+            user_money = userstats['money']
+            if int(user_money) < amount:
+                embed = discord.Embed(description=f":x: {member.mention} has insufficient money to be robbed!")
+                await ctx.send(embed=embed)
+                return
             begs = [f"You robbed {member.mention} out of {currency}{amount}! [POSITIVE]", f"You tried robbing {member.mention}, but they ended up robbing you out of {currency}{amount} [ROB]", f"You failed to rob {member.mention} [NEGATIVE]"]
 
             begs_picker = random.choice(begs)

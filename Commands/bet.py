@@ -1,4 +1,5 @@
 import random
+import re
 
 import discord
 from discord.ext import commands
@@ -20,7 +21,8 @@ class Gamble(commands.Cog):
     @commands.command()
     @commands.cooldown(1, 10, commands.BucketType.user)
     async def bet(self, ctx, amount=None, bet=None):
-        if amount is None:
+        new_amount = re.search("-", amount)
+        if amount is None or new_amount:
             embed = discord.Embed(description=":x: You must state how much you want to bet!")
             await ctx.send(embed=embed)
             return
