@@ -23,6 +23,7 @@ Please be aware of a few things. You must use `Python v3.5` and up. You will als
 | Jobs System  | Jobs allow users to own their own buisnesses and earn money Daily depending on their Jobs Level  |
 | Begging  | Modern Economy includes a begging system that consists of positive or negative outcomes, and in some cases has other players robbing you  |
 | And More!  | Modern Economy includes a lot more features that would make this list too long  |
+
 **Note:** Modern Economy is in *early stages*, bugs are to be expected and the feature count will be low, but overtime bugs will be patched and the bot will expand!
 
 # Addons
