@@ -68,7 +68,7 @@ class rob(commands.Cog):
             if not positive_check or not negative_check:
                 userstats = economy.find_one({"guildid": ctx.guild.id, "id": user})
                 user_money = userstats['money']
-                economy.update_one({"guildid": ctx.guild.id, "id": member.id},
+                economy.update_one({"guildid": ctx.guild.id, "id": id(user)},
                                    {"$set": {"money": user_money + int(amount)}})
                 economy.update_one({"guildid": ctx.guild.id, "id": ctx.author.id},
                                    {"$set": {"money": money - int(amount)}})
