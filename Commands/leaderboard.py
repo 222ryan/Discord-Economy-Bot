@@ -1,4 +1,3 @@
-
 import discord
 from discord.ext import commands
 from ruamel.yaml import YAML
@@ -62,6 +61,36 @@ class leaderboard(commands.Cog):
                 if i == config['leaderboard_amount'] + 1:
                     break
             await ctx.channel.send(embed=embed)
+
+
+
+
+def setup(client):
+    client.add_cog(leaderboard(client))
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

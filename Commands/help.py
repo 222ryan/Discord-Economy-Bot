@@ -28,7 +28,7 @@ class help(commands.Cog):
                 await ctx.send(embed=embed)
             elif helptype.lower() == "fun":
                 embed = discord.Embed(title=f":smile: Fun Commands",
-                                      description="```balance, beg, daily, leaderboard```")
+                                      description="```balance, beg, daily, leaderboard, pay, rob```")
                 embed.add_field(name="Examples",
                                 value=f"```🪙 balance [user] - Displays the users current Balance, Job and Daily Income\n"
                                       f"📊 leaderboard [global] - Displays top {top} users in the Server or Global"
@@ -37,19 +37,20 @@ class help(commands.Cog):
                                       f"☀️ daily - Receive your Daily Reward of {config['daily']}\n"
                                       f"💸 pay <@user> <amount> [message] - Pay another user an amount of money"
                                       f"\n💰 rob <@user> - Attempt to rob another user```")
-
                 await ctx.send(embed=embed)
             elif helptype.lower() == "gambling":
-                embed = discord.Embed(title=f":smile: Gambling Commands",
-                                      description="```bet```")
+                embed = discord.Embed(title=f":game_die: Gambling Commands",
+                                      description="```bet, highlow, slots```")
                 embed.add_field(name="Examples",
                                 value=f"```🎲 - bet <amount> <red|black> - Bet on a certain colour, and if your guess "
-                                      f"is correct, you will earn x2 the amount, else you will lose your money```")
+                                      f"is correct, you will earn x2 the amount, else you will lose your money\n"
+                                      f"🔼 - highlow - Guess if the the number is Higher or Lower than the number shown\n"
+                                      f"🎰 - slots <amount> - Spin the slots machine to earn high rewards!```")
 
                 await ctx.send(embed=embed)
             elif helptype.lower() == "jobs":
-                embed = discord.Embed(title=f":smile: Job Commands",
-                                      description="```job```")
+                embed = discord.Embed(title=f"💼 Job Commands",
+                                      description="```job, quitjob```")
                 embed.add_field(name="Examples",
                                 value=f"```💼 job [shop] [start] - Views information about all jobs or specific jobs and allows you to start working at a Job\n"
                                       f"👋 quitjob - Quits your current job ```")

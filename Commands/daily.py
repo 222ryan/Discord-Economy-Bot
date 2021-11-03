@@ -6,7 +6,7 @@ from discord.ext.commands import CommandOnCooldown
 from ruamel.yaml import YAML
 
 from Systems.Economy import economy
-from main import currency
+from main import currency, success_embed_colour, error_embed_colour
 
 yaml = YAML()
 with open("Configs/config.yml", "r", encoding="utf-8") as file:
@@ -26,7 +26,7 @@ class Daily(commands.Cog):
         economy.update_one({"guildid": ctx.guild.id, "id": ctx.author.id},
                            {"$set": {"money": money + config['daily']}})
         embed = discord.Embed(title="✅ Daily Claimed",
-                              description=f"{ctx.author.mention}, you have earned `{currency}{config['daily']}`!")
+                              description=f"{ctx.author.mention}, you have earned `{currency}{config['daily']}`!", colour=success_embed_colour)
         embed.add_field(name="Balance", value=f"`${money + config['daily']}`")
         embed.set_footer(text="Come back tomorrow to redeem again!")
         await ctx.send(embed=embed)
@@ -38,7 +38,7 @@ class Daily(commands.Cog):
             seconds = int(error.retry_after)
             time_remaining = str(datetime.timedelta(seconds=seconds))
 
-            embed = discord.Embed(description=f":x: {ctx.author.mention}, Slow down!")
+            embed = discord.Embed(description=f":x: {ctx.author.mention}, Slow down!", colour=error_embed_colour)
             embed.set_footer(text=f"Try again in: {time_remaining}")
             await ctx.send(embed=embed)
             return

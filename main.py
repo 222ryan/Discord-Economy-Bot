@@ -2,14 +2,13 @@
 from os import listdir
 
 from discord.ext import commands
-from discord.ext.commands import CommandNotFound, MissingRequiredArgument, CommandInvokeError, MissingRole, \
-    NoPrivateMessage
+
 import discord
+from discord.ext.commands import CommandInvokeError
 from ruamel.yaml import YAML
 import logging
 import os
 from dotenv import load_dotenv
-
 
 load_dotenv()
 
@@ -17,6 +16,13 @@ load_dotenv()
 yaml = YAML()
 with open("Configs/config.yml", "r", encoding="utf-8") as file:
     config = yaml.load(file)
+
+
+leader_embed = config["leaderboard_embed_colour"]
+embed_colour = config["embed_colour"]
+error_embed_colour = config["error_embed_colour"]
+success_embed_colour = config["success_embed_colour"]
+
 
 # Command Prefix + Removes the default discord.py help command
 client = commands.Bot(command_prefix=commands.when_mentioned_or(config['Prefix']), intents=discord.Intents.all(), case_insensitive=True)
@@ -44,8 +50,6 @@ async def on_ready():
     print(f"Status: {config_status}\nActivity: {config_activity}")
     print('------')
     await client.change_presence(status=config_activity, activity=activity)
-
-
 
 
 logging.info("------------- Loading -------------")

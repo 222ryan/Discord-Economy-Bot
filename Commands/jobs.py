@@ -5,7 +5,7 @@ from discord.ext import commands, tasks
 from ruamel.yaml import YAML
 
 from Systems.Economy import economy
-from main import currency
+from main import currency, embed_colour, error_embed_colour, success_embed_colour
 
 yaml = YAML()
 with open("Configs/config.yml", "r", encoding="utf-8") as file:
@@ -24,14 +24,14 @@ class Jobs(commands.Cog):
         if job is None:
             embed = discord.Embed(title=f"💼 {ctx.guild.name}'s Job Centre", description=f"Welcome to the Job "
                                                                                          f"Centre, "
-                                                                                         f"{ctx.author.mention}!")
+                                                                                         f"{ctx.author.mention}!", colour=embed_colour)
             embed.add_field(name="Jobs:",
                             value=f"```🛒 - Shop Owner - {prefix}job shop ```")
             await ctx.send(embed=embed)
         elif job.lower() == "shop":
             if apply is None:
                 embed = discord.Embed(title=f"💼 {ctx.guild.name}'s Job Centre",
-                                      description="Showing information for the Job `Shop Owner`")
+                                      description="Showing information for the Job `Shop Owner`", colour=embed_colour)
                 embed.add_field(name="About:", value=f"`You will own your very own Shop that generates low income (Requires: {currency}{config['shop_money_requirement']})`",
                                 inline=False)
                 embed.add_field(name="How to Start:", value=f"`{prefix}job shop start`")
@@ -40,13 +40,13 @@ class Jobs(commands.Cog):
             else:
                 stats = economy.find_one({"guildid": ctx.guild.id, "id": ctx.author.id})
                 if stats['job'] != "None":
-                    embed = discord.Embed(description=":x: You already have a job!")
+                    embed = discord.Embed(description=":x: You already have a job!", embed_colour=error_embed_colour)
                     embed.set_footer(text=f"Current Job: {stats['job']}")
                     await ctx.send(embed=embed)
                 else:
                     money = stats['money']
                     if money < config['shop_money_requirement']:
-                        embed = discord.Embed(description=":x: You have insufficient funds to work as a **Shop Owner**")
+                        embed = discord.Embed(description=":x: You have insufficient funds to work as a **Shop Owner**", embed_colour=error_embed_colour)
                         await ctx.send(embed=embed)
                         return
                     economy.update_one({"guildid": ctx.guild.id, "id": ctx.author.id},
@@ -54,7 +54,7 @@ class Jobs(commands.Cog):
                     newjob = {"guildid": ctx.guild.id, "id": ctx.author.id,
                               "job_type": "Shop", "level": 1, "last_pay": None}
                     economy.insert_one(newjob)
-                    embed = discord.Embed(description="✅ You are now a Shop Owner!")
+                    embed = discord.Embed(description="✅ You are now a Shop Owner!", colour=success_embed_colour)
                     embed.set_footer(text=f"Use {prefix}shop to get started!")
                     await ctx.send(embed=embed)
 

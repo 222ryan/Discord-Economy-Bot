@@ -6,7 +6,7 @@ from discord.ext import commands
 from ruamel.yaml import YAML
 
 from Systems.Economy import economy
-from main import currency
+from main import currency, error_embed_colour, embed_colour
 
 yaml = YAML()
 with open("Configs/config.yml", "r", encoding="utf-8") as file:
@@ -17,15 +17,17 @@ class rob(commands.Cog):
     def __init__(self, client):
         self.client = client
 
+
+
     # Pay Command
     @commands.cooldown(1, 60 * 30, commands.BucketType.user)
     @commands.command()
     async def rob(self, ctx, member: discord.Member = None):
         if member is None:
-            embed = discord.Embed(description=":x: You need to specify who you would like to rob!")
+            embed = discord.Embed(description=":x: You need to specify who you would like to rob!", colour=error_embed_colour)
             await ctx.send(embed=embed)
         if member == ctx.author:
-            embed = discord.Embed(description=":x: You cannot rob yourself!")
+            embed = discord.Embed(description=":x: You cannot rob yourself!", colour=error_embed_colour)
             await ctx.send(embed=embed)
             return
         if not member.bot:
@@ -43,7 +45,7 @@ class rob(commands.Cog):
             userstats = economy.find_one({"guildid": ctx.guild.id, "id": user})
             user_money = userstats['money']
             if int(user_money) < amount:
-                embed = discord.Embed(description=f":x: {member.mention} has insufficient money to be robbed!")
+                embed = discord.Embed(description=f":x: {member.mention} has insufficient money to be robbed!", colour=error_embed_colour)
                 await ctx.send(embed=embed)
                 return
             begs = [f"You robbed {member.mention} out of {currency}{amount}! [POSITIVE]", f"You tried robbing {member.mention}, but they ended up robbing you out of {currency}{amount} [ROB]", f"You failed to rob {member.mention} [NEGATIVE]"]
@@ -58,11 +60,11 @@ class rob(commands.Cog):
                                    {"$set": {"money": money + int(amount)}})
                 economy.update_one({"guildid": ctx.guild.id, "id": int(user)},
                                    {"$set": {"money": user_money - int(amount)}})
-                embed = discord.Embed(description=str(begs_picker).replace("[POSITIVE]", ''))
+                embed = discord.Embed(description=str(begs_picker).replace("[POSITIVE]", ''), colour=embed_colour)
                 await ctx.send(embed=embed)
                 return
             if negative_check:
-                embed = discord.Embed(description=str(begs_picker).replace("[NEGATIVE]", ''))
+                embed = discord.Embed(description=str(begs_picker).replace("[NEGATIVE]", ''), colour=embed_colour)
                 await ctx.send(embed=embed)
                 return
             if not positive_check or not negative_check:
@@ -72,11 +74,11 @@ class rob(commands.Cog):
                                    {"$set": {"money": user_money + int(amount)}})
                 economy.update_one({"guildid": ctx.guild.id, "id": ctx.author.id},
                                    {"$set": {"money": money - int(amount)}})
-                embed = discord.Embed(description=str(begs_picker).replace("[ROB]", ''))
+                embed = discord.Embed(description=str(begs_picker).replace("[ROB]", ''), colour=embed_colour)
                 await ctx.send(embed=embed)
                 return
         else:
-            embed = discord.Embed(description=":x: You cannot rob bots!")
+            embed = discord.Embed(description=":x: You cannot rob bots!", colour=error_embed_colour)
             await ctx.send(embed=embed)
             return
 

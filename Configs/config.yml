@@ -56,9 +56,6 @@ leaderboard_alias: ['lb', 'leader', 'rankings']
 # ======================================================================================
 #                                   EMBED
 # ======================================================================================
-# Rank Embed Colour | Must Be Hex Notation
-rank_embed_colour: 0x4863A0
-
 # Leaderboard Embed Colour | Must Be Hex Notation (Replace # with 0x)
 leaderboard_embed_colour: 0xffffff
 
@@ -66,16 +63,15 @@ leaderboard_embed_colour: 0xffffff
 embed_colour: 0xffffff
 
 # Error Embed Colour | Must Be Hex Notation
-error_embed_colour: 0x4863A0
+error_embed_colour: 0xFF7F7F
 
 # Success Embed Colour | Must Be Hex Notation
-success_embed_colour: 0x4863A0
+success_embed_colour: 0x32CD32
 
 
 # ======================================================================================
 #                                     HELP
 # ======================================================================================
-# NOTE: REQUIRES Extras+ ADDON!
 help_command: True
 
 
