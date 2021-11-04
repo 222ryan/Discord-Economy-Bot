@@ -37,10 +37,10 @@ daily: 100
 # ======================================================================================
 
 # The starting daily income for 'Shop' Job
-starting_shop_income: 100
+starting_shop_income: 300
 
 # How much money a user needs to start a Shop Job
-shop_money_requirement: 300
+shop_money_requirement: 1000
 
 
 # ======================================================================================

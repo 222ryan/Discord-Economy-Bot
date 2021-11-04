@@ -98,6 +98,7 @@ class Gamble(commands.Cog):
             await ctx.send(embed=embed)
             raise e
 
+
     @commands.cooldown(1, 20, commands.BucketType.user)
     @commands.command()
     async def highlow(self, ctx, bet: int = None):
@@ -186,6 +187,7 @@ class Gamble(commands.Cog):
             await ctx.send(embed=embed)
             raise e
 
+
     @commands.cooldown(1, 15, commands.BucketType.user)
     @commands.command()
     async def slots(self, ctx, bet: int = None):
@@ -198,7 +200,7 @@ class Gamble(commands.Cog):
                 embed = discord.Embed(description=":x: You don't have enough money to bet that much!")
                 await ctx.send(embed=embed)
                 return
-            slots = ["🍐", "🍋", "🍌", "🍇", "🍒", "🍍"]
+            slots = ["🍊", "🍐", "🍋", "🍉", "🍇", "🍓", "🍒" "🍍"]
             slots1 = random.choice(slots)
             slots2 = random.choice(slots)
             slots3 = random.choice(slots)
@@ -211,17 +213,17 @@ class Gamble(commands.Cog):
             if slots1 == slots2 and slots2 == slots3:
                 economy.update_one({"guildid": ctx.guild.id, "id": ctx.author.id},
                                    {"$set": {"money": economy.find_one({"guildid": ctx.guild.id, "id": ctx.author.id})[
-                                                          "money"] + int(bet)}})
+                                                          "money"] + int(bet * 2)}})
                 embed.add_field(name="$$ JACKPOT $$", value=f"You won `"
-                                                            f"{currency}{bet}`")
+                                                            f"{currency}{bet * 2}`")
                 embed.add_field(name="Balance:",
                                 value=f'`{currency}{economy.find_one({"guildid": ctx.guild.id, "id": ctx.author.id})["money"]}`')
                 await message.edit(embed=embed)
             elif slots1 == slots2 or slots2 == slots3 or slots1 == slots3:
                 economy.update_one({"guildid": ctx.guild.id, "id": ctx.author.id},
                                    {"$set": {"money": economy.find_one({"guildid": ctx.guild.id, "id": ctx.author.id})[
-                                                          "money"] + int(bet) / 2}})
-                embed.add_field(name="$$ GREAT $$", value=f"You won `{currency}{bet / 2}`")
+                                                          "money"] + int(bet)}})
+                embed.add_field(name="$$ GREAT $$", value=f"You won `{currency}{bet}`")
                 embed.add_field(name="Balance:",
                                 value=f'`{currency}{economy.find_one({"guildid": ctx.guild.id, "id": ctx.author.id})["money"]}`')
                 await message.edit(embed=embed)
@@ -229,7 +231,7 @@ class Gamble(commands.Cog):
                 economy.update_one({"guildid": ctx.guild.id, "id": ctx.author.id},
                                    {"$set": {"money": economy.find_one({"guildid": ctx.guild.id, "id": ctx.author.id})[
                                                           "money"] - int(bet)}})
-                embed.add_field(name="$$ LOSS $$", value=f"You lost `{currency}{bet}`")
+                embed.add_field(name="LOSS!", value=f"You lost `{currency}{bet}`")
                 embed.add_field(name="Balance:",
                                 value=f'`{currency}{economy.find_one({"guildid": ctx.guild.id, "id": ctx.author.id})["money"]}`')
                 await message.edit(embed=embed)
@@ -240,7 +242,6 @@ class Gamble(commands.Cog):
             embed = discord.Embed(description=":x: You need to enter a valid amount to bet on!")
             await ctx.send(embed=embed)
             raise e
-
 
 
 

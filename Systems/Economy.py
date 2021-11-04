@@ -52,12 +52,12 @@ class Economy(commands.Cog):
                 user = economy.find_one({"guildid": guild.id, "id": member.id})
                 if user:
                     economy.update_one({"guildid": guild.id, "id": member.id},
-                                       {"$set": {"money": int(config['starting_money']), "job": "None", "daily_income": 0}})
+                                       {"$set": {"money": int(config['starting_money']), "job": "None", "daily_income": 0, "name": f"{member.name}"}})
                     print(f"[Modern Economy] User: {member} already found in database, Updating Fields.")
                 else:
                     newuser = {"guildid": member.guild.id, "id": member.id,
                                "money": int(config['starting_money']),
-                               "job": "None", "daily_income": 0}
+                               "job": "None", "daily_income": 0, "name": f"{member.name}"}
                     economy.insert_one(newuser)
                     print(f"[Modern Economy] User: {member} has been added to the Database!")
 
@@ -76,7 +76,7 @@ class Economy(commands.Cog):
             user = economy.find_one({"guildid": member.guild.id, "id": member.id})
             if user:
                 economy.update_one({"guildid": member.guild.id, "id": member.id},
-                                   {"$set": {"money": int(config['starting_money']), "job": "None", "daily_income": 0}})
+                                   {"$set": {"money": int(config['starting_money']), "job": "None", "daily_income": 0, "name": f"{member.name}"}})
                 print(f"[Modern Economy] User: {member} already found in database, Updating Fields.")
             else:
                 newuser = {"guildid": member.guild.id, "id": member.id,
@@ -86,7 +86,7 @@ class Economy(commands.Cog):
                 print(f"[Modern Economy] User: {member} has been added to the Database!")
             newuser = {"guildid": member.guild.id, "id": member.id,
                        "money": int(config['starting_money']),
-                       "job": "None", "daily_income": 0}
+                       "job": "None", "daily_income": 0, "name": f"{member.name}"}
             economy.insert_one(newuser)
             print(f"[Modern Economy] User: {member.id} has been added to the database!")
 

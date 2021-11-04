@@ -10,6 +10,8 @@ import logging
 import os
 from dotenv import load_dotenv
 
+from Systems.Economy import economy
+
 load_dotenv()
 
 # Opens the config and reads it, no need for changes unless you'd like to change the library (no need to do so unless having issues with ruamel)
@@ -50,6 +52,12 @@ async def on_ready():
     print(f"Status: {config_status}\nActivity: {config_activity}")
     print('------')
     await client.change_presence(status=config_activity, activity=activity)
+    for guild in client.guilds:
+        userstats = economy.find({"guildid": guild.id, "name": {"$exists": False}, "id": {"$exists": True}})
+        for doc in userstats:
+            member = await client.fetch_user(doc["id"])
+            economy.update_one({"guildid": guild.id, "id": doc['id']}, {"$set": {"name": str(f"{member}")}})
+            print(f"[Modern Economy] The field NAME was missing for: {member} - Automatically added it!")
 
 
 logging.info("------------- Loading -------------")
