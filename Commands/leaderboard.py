@@ -135,7 +135,7 @@ class leaderboard(commands.Cog):
                 embed.clear_fields()
                 for users, money, guild in i:
                     num += 1
-                    embed.add_field(name=f"#{num}: {users} \n`{self.client.get_guild(guild)}`", value=f"```{currency}{money}```", inline=True)
+                    embed.add_field(name=f"#{num}: {users}\n`{self.client.get_guild(guild)}`", value=f"```{currency}{money}```", inline=True)
                 embed.set_footer(text=f"Page {page + 1}/{len(pages)}")
                 message = await ctx.send(embed=embed)
                 page += 1
@@ -163,7 +163,7 @@ class leaderboard(commands.Cog):
                                     balance_list.append(money)
                                     guild_list.append(guild)
                                 for x in range(0, 10):
-                                    embed.add_field(name=f"#{x + 1 + num - len(user_list)}: {user_list[x]} \n`{self.client.get_guild(guild[x])}`",
+                                    embed.add_field(name=f"#{x + 1 + num - len(user_list)}: {user_list[x]}\n`{self.client.get_guild(guild_list[x])}`",
                                                     value=f"```{currency}{balance_list[x]}```", inline=True)
                                 user_list.clear()
                                 balance_list.clear()
@@ -185,7 +185,7 @@ class leaderboard(commands.Cog):
                                     user_list.append(users)
                                     balance_list.append(money)
                                     guild_list.append(guild)
-                                    embed.add_field(name=f"#{num}: {users} `{self.client.get_guild(guild)}`", value=f"```{currency}{money}```",
+                                    embed.add_field(name=f"#{num}: {users}\n`{self.client.get_guild(guild)}`", value=f"```{currency}{money}```",
                                                     inline=True)
                                 if len(user_list) != 10:
                                     get_ten = 10 - len(user_list)
