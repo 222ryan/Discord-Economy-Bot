@@ -200,7 +200,7 @@ class Gamble(commands.Cog):
                 embed = discord.Embed(description=":x: You don't have enough money to bet that much!")
                 await ctx.send(embed=embed)
                 return
-            slots = ["🍊", "🍐", "🍋", "🍉", "🍇", "🍓", "🍒" "🍍"]
+            slots = ["🍊", "🍐", "🍋", "🍉", "🍇", "🍓", "🍒", "🍍"]
             slots1 = random.choice(slots)
             slots2 = random.choice(slots)
             slots3 = random.choice(slots)
