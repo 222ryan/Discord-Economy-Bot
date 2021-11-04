@@ -103,7 +103,7 @@ class Gamble(commands.Cog):
     @commands.command()
     async def highlow(self, ctx, bet: int = None):
         try:
-            if bet is None:
+            if bet is None or bet < 0:
                 embed = discord.Embed(description=":x: You must enter a number to bet on!")
                 await ctx.send(embed=embed)
                 return
@@ -242,6 +242,9 @@ class Gamble(commands.Cog):
             embed = discord.Embed(description=":x: You need to enter a valid amount to bet on!")
             await ctx.send(embed=embed)
             raise e
+
+
+
 
 
 
