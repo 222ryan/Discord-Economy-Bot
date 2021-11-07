@@ -31,6 +31,10 @@ class Gamble(commands.Cog):
                 embed = discord.Embed(description=":x: You must state if you want to bet on **Red** or **Black**")
                 await ctx.send(embed=embed)
                 return
+            if bet > config['black_red_cap']:
+                embed = discord.Embed(description=f":x: **Betting Machine** only supports bets up to `{currency}{config['black_red_cap']}`!")
+                await ctx.send(embed=embed)
+                return
             stats = economy.find_one({"guildid": ctx.guild.id, "id": ctx.author.id})
             money = stats['money']
             bet_money = int(amount)
@@ -107,6 +111,10 @@ class Gamble(commands.Cog):
                 embed = discord.Embed(description=":x: You must enter a number to bet on!")
                 await ctx.send(embed=embed)
                 return
+            if bet > config['high_low_cap']:
+                embed = discord.Embed(description=f":x: **High/Low** only supports bets up to `{currency}{config['high_low_cap']}`!")
+                await ctx.send(embed=embed)
+                return
             stats = economy.find_one({"guildid": ctx.guild.id, "id": ctx.author.id})
             money = stats["money"]
             if money < int(bet):
@@ -122,10 +130,11 @@ class Gamble(commands.Cog):
             message = await ctx.send(embed=embed)
 
             await message.add_reaction("⬆️")
+            await message.add_reaction("💣")
             await message.add_reaction("⬇️")
 
             def check(reaction, user):
-                return user == ctx.author and str(reaction.emoji) in ["⬆️", "⬇️"]
+                return user == ctx.author and str(reaction.emoji) in ["⬆️", "⬇️", "💣"]
 
             while True:
                 try:
@@ -133,7 +142,7 @@ class Gamble(commands.Cog):
 
                     if str(reaction.emoji) == "⬆️":
                         if number > hint_num:
-                            embed = discord.Embed(title=f"High/Low | {ctx.author.name}",
+                            embed = discord.Embed(title=f"High/Low | {ctx.author.name} | HIGHER",
                                                   description=f"The secret number was **{number}**")
                             embed.set_footer(text=f"Member Betting: {ctx.author}")
                             await message.edit(embed=embed)
@@ -143,7 +152,7 @@ class Gamble(commands.Cog):
                             embed.add_field(name="Balance:", value=f"`{currency}{money + bet}`")
                             await message.edit(embed=embed)
                         else:
-                            embed = discord.Embed(title=f"High/Low | {ctx.author.name}",
+                            embed = discord.Embed(title=f"High/Low | {ctx.author.name} | HIGHER",
                                                   description=f"The secret number was **{number}**")
                             embed.set_footer(text=f"Member Betting: {ctx.author}")
                             await message.edit(embed=embed)
@@ -157,7 +166,7 @@ class Gamble(commands.Cog):
                         return
                     elif str(reaction.emoji) == "⬇️":
                         if number < hint_num:
-                            embed = discord.Embed(title=f"High/Low | {ctx.author.name}",
+                            embed = discord.Embed(title=f"High/Low | {ctx.author.name} | LOWER",
                                                   description=f"The secret number was **{number}**")
                             embed.set_footer(text=f"Member Betting: {ctx.author}")
                             await message.edit(embed=embed)
@@ -167,7 +176,7 @@ class Gamble(commands.Cog):
                             embed.add_field(name="Balance:", value=f"`{currency}{money + bet}`")
                             await message.edit(embed=embed)
                         else:
-                            embed = discord.Embed(title=f"High/Low | {ctx.author.name}",
+                            embed = discord.Embed(title=f"High/Low | {ctx.author.name} | LOWER",
                                                   description=f"The secret number was **{number}**")
                             embed.set_footer(text=f"Member Betting: {ctx.author}")
                             await message.edit(embed=embed)
@@ -177,6 +186,27 @@ class Gamble(commands.Cog):
                             embed.add_field(name="Balance:", value=f"`{currency}{money - bet}`")
                             await message.edit(embed=embed)
                         await message.remove_reaction(reaction, user)
+                    elif str(reaction.emoji) == "💣":
+                        if number == hint_num:
+                            embed = discord.Embed(title=f"High/Low | {ctx.author.name} | EXACT",
+                                                  description=f"The secret number was **{number}**")
+                            embed.set_footer(text=f"Member Betting: {ctx.author}")
+                            await message.edit(embed=embed)
+                            economy.update_one({"guildid": ctx.guild.id, "id": ctx.author.id},
+                                               {"$set": {"money": money + int(bet * 2)}})
+                            embed.add_field(name="WINNER!", value=f"You won `{currency}{bet * 2}`")
+                            embed.add_field(name="Balance:", value=f"`{currency}{money + (bet*2)}`")
+                            await message.edit(embed=embed)
+                        else:
+                            embed = discord.Embed(title=f"High/Low | {ctx.author.name} | EXACT",
+                                                  description=f"The secret number was **{number}**")
+                            embed.set_footer(text=f"Member Betting: {ctx.author}")
+                            await message.edit(embed=embed)
+                            economy.update_one({"guildid": ctx.guild.id, "id": ctx.author.id},
+                                               {"$set": {"money": money - int(bet*2)}})
+                            embed.add_field(name="LOSS!", value=f"You lost `{currency}{bet*2}`")
+                            embed.add_field(name="Balance:", value=f"`{currency}{money - (bet*2)}`")
+                            await message.edit(embed=embed)
                     else:
                         await message.remove_reaction(reaction, user)
                 except asyncio.TimeoutError:
@@ -198,6 +228,10 @@ class Gamble(commands.Cog):
                 return
             if bet > economy.find_one({"guildid": ctx.guild.id, "id": ctx.author.id})["money"]:
                 embed = discord.Embed(description=":x: You don't have enough money to bet that much!")
+                await ctx.send(embed=embed)
+                return
+            if bet > config['slots_cap']:
+                embed = discord.Embed(description=f":x: **Slots** only supports bets up to `{currency}{config['slots_cap']}`")
                 await ctx.send(embed=embed)
                 return
             slots = ["🍊", "🍐", "🍋", "🍉", "🍇", "🍓", "🍒", "🍍"]
