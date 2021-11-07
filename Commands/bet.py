@@ -31,7 +31,7 @@ class Gamble(commands.Cog):
                 embed = discord.Embed(description=":x: You must state if you want to bet on **Red** or **Black**")
                 await ctx.send(embed=embed)
                 return
-            if bet > config['black_red_cap']:
+            if amount > config['black_red_cap']:
                 embed = discord.Embed(description=f":x: **Betting Machine** only supports bets up to `{currency}{config['black_red_cap']}`!")
                 await ctx.send(embed=embed)
                 return
