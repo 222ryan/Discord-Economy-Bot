@@ -33,6 +33,19 @@ currency_type: $
 daily: 100
 
 # ======================================================================================
+#                                     GAMBLING
+# ======================================================================================
+
+# The cap of how much money a user can bet on HIGH/LOW
+high_low_cap: 3000
+
+# The cap of how much money a user can bet on BLACK/RED
+black_red_cap: 25000
+
+# The cap of how much money a user can bet on SLOTS
+slots_cap: 100000
+
+# ======================================================================================
 #                                   JOBS
 # ======================================================================================
 
@@ -50,7 +63,7 @@ shop_money_requirement: 1000
 leaderboard_amount: 10
 
 # Sets aliases for the leaderboard command
-leaderboard_alias: ['lb', 'leader', 'rankings']
+leaderboard_alias: ['lb', 'leader', 'rankings', 'baltop']
 
 
 # ======================================================================================
