@@ -363,9 +363,9 @@ def setup(client):
             for member in guild.members:
                 for user in economy.find({"guildid": guild.id, "id": member.id, "job_type": {"$exists": True}}):
                     if user['job_type'] == "Shop":
-                        economy.update_one({"guildid": user['guildid'], "id": user['id'], "job_type": "Programmer"},
-                                           {"$set": {"last_pay": int(time.time())}})
                         if user["last_pay"] is None or user['last_pay'] + 86400 < int(time.time()):
+                            economy.update_one({"guildid": user['guildid'], "id": user['id'], "job_type": "Shop"},
+                                               {"$set": {"last_pay": int(time.time())}})
                             owner = economy.find_one(
                                 {"guildid": guild.id, "id": member.id, "job_type": {"$exists": False}})
                             if "Stock" not in owner['inventory']:
@@ -429,7 +429,7 @@ def setup(client):
                             await channel.send(embed=embed)
                     elif user['job_type'] == "Fisher":
                         if user["last_pay"] is None or user['last_pay'] + 86400 < int(time.time()):
-                            economy.update_one({"guildid": user['guildid'], "id": user['id'], "job_type": "Programmer"},
+                            economy.update_one({"guildid": user['guildid'], "id": user['id'], "job_type": "Fisher"},
                                                {"$set": {"last_pay": int(time.time())}})
                             owner = economy.find_one(
                                 {"guildid": guild.id, "id": member.id, "job_type": {"$exists": False}})
