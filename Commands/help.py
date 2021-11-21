@@ -24,6 +24,8 @@ class help(commands.Cog):
                 embed.add_field(name=f"💼 Jobs",
                                 value=f"`{prefix}help jobs`\n[Hover for info](https://www. 'Shows information regarding Jobs "
                                       f"bet your money')")
+                embed.add_field(name=f"🛍️ Shopping",
+                                value=f"`{prefix}help shopping`\n[Hover for info](https://www. 'Shows information regarding shopping')")
                 embed.set_footer(text="If you're on mobile, the hover button will not work")
                 await ctx.send(embed=embed)
             elif helptype.lower() == "fun":
@@ -52,8 +54,19 @@ class help(commands.Cog):
                 embed = discord.Embed(title=f"💼 Job Commands",
                                       description="```job, quitjob```")
                 embed.add_field(name="Examples",
-                                value=f"```💼 job [shop] [start] - Views information about all jobs or specific jobs and allows you to start working at a Job\n"
-                                      f"👋 quitjob - Quits your current job ```")
+                                value=f"```💼 job [user] - Views info about a users job. If the user does not have a job, it will display available jobs\n"
+                                      f"👋 quitjob - Quits your current job"
+                                      f"🏢 apply <jobName> - Apply for a job```")
+
+                await ctx.send(embed=embed)
+            elif helptype.lower() == "shopping":
+                embed = discord.Embed(title=f"🛍️ Shopping Commands",
+                                      description="```store, buy, sell, inventory```")
+                embed.add_field(name="Examples",
+                                value=f"```🛍️ store - Displays the store\n"
+                                      f"💸 buy <amount> <item> - Buy an item from the store\n"
+                                      f"💰 sell <amount> <item> - Sell an item to the store\n"
+                                      f"🎒 inventory - Displays your inventory```")
 
                 await ctx.send(embed=embed)
 

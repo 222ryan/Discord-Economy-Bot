@@ -1,3 +1,5 @@
+import asyncio
+
 import discord
 from discord.ext import commands
 from pymongo import MongoClient
@@ -52,12 +54,12 @@ class Economy(commands.Cog):
                 user = economy.find_one({"guildid": guild.id, "id": member.id})
                 if user:
                     economy.update_one({"guildid": guild.id, "id": member.id},
-                                       {"$set": {"money": int(config['starting_money']), "job": "None", "daily_income": 0, "name": f"{member.name}"}})
+                                       {"$set": {"money": int(config['starting_money']), "job": "None", "daily_income": 0, "name": f"{member.name}", "inventory": [], "inventory_amount": []}})
                     print(f"[Modern Economy] User: {member} already found in database, Updating Fields.")
                 else:
                     newuser = {"guildid": member.guild.id, "id": member.id,
                                "money": int(config['starting_money']),
-                               "job": "None", "daily_income": 0, "name": f"{member.name}"}
+                               "job": "None", "daily_income": 0, "name": f"{member.name}", "inventory": [], "inventory_amount": []}
                     economy.insert_one(newuser)
                     print(f"[Modern Economy] User: {member} has been added to the Database!")
 
@@ -72,23 +74,19 @@ class Economy(commands.Cog):
 
     @commands.Cog.listener()
     async def on_member_join(self, member):
+        await asyncio.sleep(3)
         if not member.bot:
             user = economy.find_one({"guildid": member.guild.id, "id": member.id})
             if user:
                 economy.update_one({"guildid": member.guild.id, "id": member.id},
-                                   {"$set": {"money": int(config['starting_money']), "job": "None", "daily_income": 0, "name": f"{member.name}"}})
+                                   {"$set": {"money": int(config['starting_money']), "job": "None", "daily_income": 0, "name": f"{member.name}", "inventory": [], "inventory_amount": []}})
                 print(f"[Modern Economy] User: {member} already found in database, Updating Fields.")
             else:
                 newuser = {"guildid": member.guild.id, "id": member.id,
                            "money": int(config['starting_money']),
-                           "job": "None", "daily_income": 0}
+                           "job": "None", "daily_income": 0, "inventory": [], "inventory_amount": []}
                 economy.insert_one(newuser)
                 print(f"[Modern Economy] User: {member} has been added to the Database!")
-            newuser = {"guildid": member.guild.id, "id": member.id,
-                       "money": int(config['starting_money']),
-                       "job": "None", "daily_income": 0, "name": f"{member.name}"}
-            economy.insert_one(newuser)
-            print(f"[Modern Economy] User: {member.id} has been added to the database!")
 
     @commands.Cog.listener()
     async def on_member_remove(self, member):

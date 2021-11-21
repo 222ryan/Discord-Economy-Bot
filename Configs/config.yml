@@ -46,15 +46,45 @@ black_red_cap: 25000
 slots_cap: 100000
 
 # ======================================================================================
+#                                   SHOPS
+# ======================================================================================
+
+# The item being sold in the shop
+items: ["Stock", "Computer", "Fishing Rod", "Ide License", "Server", "Leash"]
+
+# The price of the item
+prices: [1000, 100000, 500, 30000, 25000, 250]
+
+# The description of the item
+description: ["Required for **Shop Owner**", "Required for **Programmer**", "Required for **Fisher**", "Required for **Programmer**", "Required for **Programmer**", "Required for **Dog Walker**"]
+
+# ======================================================================================
 #                                   JOBS
 # ======================================================================================
 
 # The starting daily income for 'Shop' Job
-starting_shop_income: 300
+starting_shop_income: 1000
 
 # How much money a user needs to start a Shop Job
 shop_money_requirement: 1000
 
+# The starting daily income for 'Fisher' Job
+starting_fisher_income: 600
+
+# How much money a user needs to start a Fisher Job
+fisher_money_requirement: 600
+
+# The starting daily income for 'Programmer' Job
+starting_programmer_income: 10000
+
+# How much money a user needs to start a Programmer Job
+programmer_money_requirement: 10000
+
+# The starting daily income for 'Dog Walker' Job
+starting_dog_income: 50
+
+# How much money a user needs to start a Dog Walker Job
+dog_money_requirement: 50
 
 # ======================================================================================
 #                                  LEADERBOARD
