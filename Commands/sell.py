@@ -17,7 +17,7 @@ class Sell(commands.Cog):
     @commands.command()
     async def sell(self, ctx, amount: int = None, *, item: str = None):
         # check if amount is none
-        if amount is None:
+        if amount is None or amount < 1:
             embed = discord.Embed(description=":x: You need to specify an amount!", color=error_embed_colour)
             await ctx.send(embed=embed)
             return
