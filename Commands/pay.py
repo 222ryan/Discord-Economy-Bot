@@ -25,7 +25,7 @@ class Pay(commands.Cog):
                 member = ctx.author
             if message is None:
                 message = f"There was no message attached to this payment!"
-            if amount is None:
+            if amount is None or amount < 1:
                 embed = discord.Embed(description=":x: You must state how much you want to pay!", colour=error_embed_colour)
                 await ctx.send(embed=embed)
                 return
@@ -49,20 +49,20 @@ class Pay(commands.Cog):
                     receiver = stats['money']
                     if int(author_money) < int(amount):
                         embed = discord.Embed(description=":x: You have insufficient funds!", colour=error_embed_colour)
-                        embed.add_field(name="Balance:", value=f"`{currency}{author_money}`")
+                        embed.add_field(name="Balance:", value=f"`{currency}{author_money:,}`")
                         await ctx.send(embed=embed)
                     else:
                         economy.update_one({"guildid": ctx.guild.id, "id": member.id},
                                            {"$set": {"money": receiver + int(amount)}})
                         economy.update_one({"guildid": ctx.guild.id, "id": ctx.author.id},
                                            {"$set": {"money": author_money - int(amount)}})
-                        embed = discord.Embed(title="✅ Payment Successful!", description=f"You sent `{currency}{amount}` to {member.mention}!", colour=success_embed_colour)
-                        embed.add_field(name="Balance", value=f"`{currency}{int(author_money) - int(amount)}`")
+                        embed = discord.Embed(title="✅ Payment Successful!", description=f"You sent `{currency}{amount:,}` to {member.mention}!", colour=success_embed_colour)
+                        embed.add_field(name="Balance", value=f"`{currency}{int(author_money) - int(amount):,}`")
                         await ctx.send(embed=embed)
 
                         channel = await member.create_dm()
-                        embed = discord.Embed(title=f"Payment From {ctx.author}", description=f"You have received `{currency}{amount}` from {ctx.author.mention}!", colour=success_embed_colour)
-                        embed.add_field(name="Balance:", value=f"`{currency}{int(receiver) + int(amount)}`")
+                        embed = discord.Embed(title=f"Payment From {ctx.author}", description=f"You have received `{currency}{amount:,}` from {ctx.author.mention}!", colour=success_embed_colour)
+                        embed.add_field(name="Balance:", value=f"`{currency}{int(receiver) + int(amount):,}`")
                         embed.add_field(name="Message:", value=f"`{message}`", inline=False)
                         await channel.send(embed=embed)
 
