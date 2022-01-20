@@ -55,9 +55,9 @@ class Buy(commands.Cog):
                                                {"$inc": {f"inventory_amount.{count - 1}": + amount}})
                             # remove the money from the user
                             economy.update_one({"guildid": ctx.guild.id, "id": ctx.author.id, "job_type": {"$exists": False}},
-                                               {"$inc": {"money": -price * amount}})
+                                               {"$inc": {"money": - (price * amount)}})
                             embed = discord.Embed(
-                                description=f":white_check_mark: You bought `x{amount} {item.title()}'s` for `{currency}{price}`!",
+                                description=f":white_check_mark: You bought `x{amount:,} {item.title()}'s` for `{currency}{price:,}`!",
                                 color=embed_colour)
                             await ctx.send(embed=embed)
                             return
@@ -66,6 +66,8 @@ class Buy(commands.Cog):
                     economy.update_one({"guildid": ctx.guild.id, "id": ctx.author.id, "job_type": {"$exists": False}},
                                        {"$push": {f"inventory": str(item).title()},
                                         "$inc": {f"inventory_amount.{count}": + amount}})
+                    economy.update_one({"guildid": ctx.guild.id, "id": ctx.author.id, "job_type": {"$exists": False}},
+                                       {"$inc": {"money": - (price * amount)}})
 
 
 
@@ -75,7 +77,7 @@ class Buy(commands.Cog):
 
 
 
-                    embed = discord.Embed(description=f":white_check_mark: You bought `x{amount} {item}'s` for `{currency}{price}`!", color=embed_colour)
+                    embed = discord.Embed(description=f":white_check_mark: You bought `x{amount:,} {item}'s` for `{currency}{price:,}`!", color=embed_colour)
                     await ctx.send(embed=embed)
                     return
 

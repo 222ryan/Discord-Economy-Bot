@@ -2,6 +2,7 @@ import discord
 from discord.ext import commands
 from ruamel.yaml import YAML
 
+import kumoslab.functions
 from Systems.Economy import economy
 from main import currency
 
@@ -26,11 +27,10 @@ class Balance(commands.Cog):
                                       colour=config['error_embed_colour'])
                 await ctx.channel.send(embed=embed)
             else:
-
                 embed = discord.Embed(title=f"{ctx.guild.name}'s Bank")
-                embed.add_field(name="Money:", value=f"`{currency}{stats['money']}`")
+                embed.add_field(name="Money:", value=f"`{currency}{await kumoslab.functions.getmoney(guildid=ctx.guild.id, userid=member.id):,}`")
                 embed.add_field(name="Job:", value=f"`{stats['job']}`")
-                embed.add_field(name="Daily Income:", value=f"`{currency}{stats['daily_income']}`")
+                embed.add_field(name="Daily Income:", value=f"`{currency}{stats['daily_income']:,}`")
                 embed.set_footer(text=f"Viewing Info For: {member}")
                 await ctx.send(embed=embed)
 

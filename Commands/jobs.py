@@ -27,7 +27,7 @@ class Jobs(commands.Cog):
             embed = discord.Embed(title="🏢 JOBS CENTRE")
             embed.add_field(name="Job Status:", value="`Unemployed`")
             embed.add_field(name="Available Jobs",
-                            value=f"```🛒 Shop Owner - Requires {currency}{config['shop_money_requirement']} and x1 Stock with a Medium Pay\n🎣 Fisher - Requires {currency}{config['fisher_money_requirement']} and x1 Fishing Rod with a Medium Pay\n🖥️ Programmer - Requires {currency}{config['programmer_money_requirement']}, x1 Computer, x1 IDE License, x1 Server with a Large Pay\n🐶 Dog Walker - Requires {currency}{config['dog_money_requirement']} with a Low Pay```",
+                            value=f"```🛒 Shop Owner - Requires {currency}{config['shop_money_requirement']:,} and x1 Stock with a Medium Pay\n🎣 Fisher - Requires {currency}{config['fisher_money_requirement']:,} and x1 Fishing Rod with a Medium Pay\n🖥️ Programmer - Requires {currency}{config['programmer_money_requirement']:,}, x1 Computer, x1 IDE License, x1 Server with a Large Pay\n🐶 Dog Walker - Requires {currency}{config['dog_money_requirement']:,} with a Low Pay```",
                             inline=False)
             embed.set_footer(text=f"Want a job? - {config['Prefix']}apply <jobName> to apply!")
             await ctx.send(embed=embed)
@@ -44,27 +44,27 @@ class Jobs(commands.Cog):
                 embed = discord.Embed(title=f"💼 {member}'s Job")
                 embed.add_field(name="Job:", value=f"`{member_stats['job']}`")
                 if job_stats['job_type'] == "Shop":
-                    embed.add_field(name="Daily Income:", value=f"`{currency}{member_stats['daily_income']}`")
+                    embed.add_field(name="Daily Income:", value=f"`{currency}{member_stats['daily_income']:,}`")
                     if "Stock" in member_stats['inventory']:
                         embed.add_field(name="Stocked?", value="`✅`")
                     else:
                         embed.add_field(name="Stocked?", value="`❌`")
                 if job_stats['job_type'] == "Fisher":
-                    embed.add_field(name="Daily Income:", value=f"`{currency}{member_stats['daily_income']}`")
+                    embed.add_field(name="Daily Income:", value=f"`{currency}{member_stats['daily_income']:,}`")
                     if "Fishing Rod" in member_stats['inventory']:
                         embed.add_field(name="Fishing Rod Stocked?", value="`✅`")
                     else:
                         embed.add_field(name="Fishing Rod Stocked?", value="`❌`")
 
                 if job_stats['job_type'] == "Programmer":
-                    embed.add_field(name="Daily Income:", value=f"`{currency}{member_stats['daily_income']}`")
+                    embed.add_field(name="Daily Income:", value=f"`{currency}{member_stats['daily_income']:,}`")
                     if "Ide License" in member_stats['inventory']:
                         embed.add_field(name="IDE License Stocked?", value="`✅`")
                     else:
                         embed.add_field(name="IDE License Stocked?", value="`❌`")
 
                 if job_stats['job_type'] == "Dog Walker":
-                    embed.add_field(name="Daily Income:", value=f"`{currency}{member_stats['daily_income']}`")
+                    embed.add_field(name="Daily Income:", value=f"`{currency}{member_stats['daily_income']:,}`")
                     if "Leash" in member_stats['inventory']:
                         embed.add_field(name="Leash Stocked?", value="`✅`")
                     else:
@@ -381,7 +381,7 @@ def setup(client):
                                 daily_income = config['starting_shop_income'] * level
                             else:
                                 daily_income = config['starting_shop_income'] * user['level']
-                            economy.update_one({"guildid": user['guildid'], "id": user['id']},
+                            economy.update_one({"guildid": guild.id, "id": member.id},
                                                {"$inc": {"money": daily_income}})
                             count = 0
                             for x in owner['inventory']:
@@ -416,15 +416,15 @@ def setup(client):
 
                             channel = await member.create_dm()
                             embed = discord.Embed(title="🛒 Shop Owner Payment",
-                                                  description=f"You have been paid {currency}{daily_income} for "
+                                                  description=f"You have been paid {currency}{daily_income:,} for "
                                                               f"working as a `Shop Owner`")
                             money = economy.find_one({"guildid": guild.id, "id": member.id})
-                            embed.add_field(name="Balance", value=f"`{currency}{money['money']}`")
+                            embed.add_field(name="Balance", value=f"`{currency}{money['money']:,}`")
                             embed.set_footer(text=f"From Server: {guild}")
                             if user['level'] != 10:
                                 embed.add_field(name="LEVEL UP!",
                                                 value=f"`Your shop is now Level: {user['level'] + 1}/10`")
-                                economy.update_one({"guildid": user['guildid'], "id": user['id'], "job_type": "Shop"},
+                                economy.update_one({"guildid":guild.id, "id": member.id, "job_type": "Shop"},
                                                    {"$set": {"level": user['level'] + 1}})
                             await channel.send(embed=embed)
                     elif user['job_type'] == "Fisher":
@@ -446,7 +446,7 @@ def setup(client):
                                 daily_income = config['starting_fisher_income'] * level
                             else:
                                 daily_income = config['starting_shop_income'] * user['level']
-                            economy.update_one({"guildid": user['guildid'], "id": user['id'], "job_type": "Fisher"},
+                            economy.update_one({"guildid": user['guildid'], "id": user['id']},
                                                {"$inc": {"money": daily_income}})
                             count = 0
                             for x in owner['inventory']:
@@ -478,10 +478,10 @@ def setup(client):
 
                             channel = await member.create_dm()
                             embed = discord.Embed(title="🎣 Fisher Payment",
-                                                  description=f"You have been paid {currency}{daily_income} for "
+                                                  description=f"You have been paid {currency}{daily_income:,} for "
                                                               f"working as a `Fisher`")
                             money = economy.find_one({"guildid": guild.id, "id": member.id})
-                            embed.add_field(name="Balance", value=f"`{currency}{money['money']}`")
+                            embed.add_field(name="Balance", value=f"`{currency}{money['money']:,}`")
                             embed.set_footer(text=f"From Server: {guild}")
                             if user['level'] != 10:
                                 embed.add_field(name="LEVEL UP!",
@@ -507,7 +507,7 @@ def setup(client):
                                 daily_income = config['starting_programmer_income'] * level
                             else:
                                 daily_income = config['starting_shop_income'] * user['level']
-                            economy.update_one({"guildid": user['guildid'], "id": user['id'], "job_type": "Programmer"},
+                            economy.update_one({"guildid": guild.id, "id": member.id},
                                                {"$inc": {"money": daily_income}})
                             count = 0
                             for x in owner['inventory']:
@@ -539,10 +539,10 @@ def setup(client):
 
                             channel = await member.create_dm()
                             embed = discord.Embed(title="🖥️ Programmer Payment",
-                                                  description=f"You have been paid {currency}{daily_income} for "
+                                                  description=f"You have been paid {currency}{daily_income:,} for "
                                                               f"working as a `Programmer`")
                             money = economy.find_one({"guildid": guild.id, "id": member.id})
-                            embed.add_field(name="Balance", value=f"`{currency}{money['money']}`")
+                            embed.add_field(name="Balance", value=f"`{currency}{money['money']:,}`")
                             embed.set_footer(text=f"From Server: {guild}")
                             if user['level'] != 10:
                                 embed.add_field(name="LEVEL UP!",
@@ -568,7 +568,7 @@ def setup(client):
                                 daily_income = config['starting_dog_income'] * level
                             else:
                                 daily_income = config['starting_shop_income'] * user['level']
-                            economy.update_one({"guildid": user['guildid'], "id": user['id'], "job_type": "Dog Walker"},
+                            economy.update_one({"guildid": guild.id, "id": member.id},
                                                {"$inc": {"money": daily_income}})
                             count = 0
                             for x in owner['inventory']:
@@ -600,10 +600,10 @@ def setup(client):
 
                             channel = await member.create_dm()
                             embed = discord.Embed(title="🐶 Dog Walker Payment",
-                                                  description=f"You have been paid {currency}{daily_income} for "
+                                                  description=f"You have been paid {currency}{daily_income:,} for "
                                                               f"working as a `Dog Walker`")
                             money = economy.find_one({"guildid": guild.id, "id": member.id})
-                            embed.add_field(name="Balance", value=f"`{currency}{money['money']}`")
+                            embed.add_field(name="Balance", value=f"`{currency}{money['money']:,}`")
                             embed.set_footer(text=f"From Server: {guild}")
                             if user['level'] != 10:
                                 embed.add_field(name="LEVEL UP!",

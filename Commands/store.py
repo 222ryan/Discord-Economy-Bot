@@ -41,7 +41,7 @@ class Store(commands.Cog):
         for i in pages:
             embed.clear_fields()
             for item, price, description in i:
-                embed.add_field(name=f"{item}", value=f"Price: `{currency}{price}`\n{description}", inline=False)
+                embed.add_field(name=f"{item}", value=f"Price: `{currency}{price:,}`\n{description}", inline=False)
             embed.set_footer(text=f"Page {page + 1}/{len(pages)} | !buy <amount> <item>")
             message = await ctx.send(embed=embed)
             page += 1
@@ -63,7 +63,7 @@ class Store(commands.Cog):
                             page -= 1
                             embed.clear_fields()
                             for item, price, description in pages[page - 1]:
-                                embed.add_field(name=f"{item}", value=f"Price: `{currency}{price}`\n{description}", inline=False)
+                                embed.add_field(name=f"{item}", value=f"Price: `{currency}{price:,}`\n{description}", inline=False)
                             embed.set_footer(text=f"Page {page}/{len(pages)}")
                             await message.edit(embed=embed)
                             await message.remove_reaction("⬅️", user)
@@ -76,7 +76,7 @@ class Store(commands.Cog):
                             page += 1
                             embed.clear_fields()
                             for item, price, description in pages[page - 1]:
-                                embed.add_field(name=f"{item}", value=f"Price: `{currency}{price}`\n{description}", inline=False)
+                                embed.add_field(name=f"{item}", value=f"Price: `{currency}{price:,}`\n{description}", inline=False)
                             embed.set_footer(text=f"Page {page}/{len(pages)} | !buy <amount> <item>")
                             await message.edit(embed=embed)
                             await message.remove_reaction("⬅️", user)

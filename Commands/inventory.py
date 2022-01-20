@@ -45,7 +45,7 @@ class Inventory(commands.Cog):
             # check if items is none
             for items, amount in i:
                 num += 1
-                embed.add_field(name=f"#{num}: {items}", value=f"You own `{amount}`", inline=True)
+                embed.add_field(name=f"#{num}: {items}", value=f"You own `{amount:,}`", inline=True)
 
             embed.set_footer(text=f"Page {page + 1}/{len(pages)}")
             message = await ctx.send(embed=embed)
@@ -74,7 +74,7 @@ class Inventory(commands.Cog):
                                 amount_list.append(amount)
                             for x in range(0, 10):
                                 embed.add_field(name=f"#{x + 1 + num - len(items_list)}: {items_list[x]}",
-                                                value=f"You own `{amount}`", inline=True)
+                                                value=f"You own `{amount:,}`", inline=True)
                             items_list.clear()
                             amount_list.clear()
                             embed.set_footer(text=f"Page {page}/{len(pages)}")
@@ -93,7 +93,7 @@ class Inventory(commands.Cog):
                                 num += 1
                                 items_list.append(items)
                                 amount_list.append(amount)
-                                embed.add_field(name=f"#{num}: {items}", value=f"You own `{amount}`",
+                                embed.add_field(name=f"#{num}: {items}", value=f"You own `{amount:,}`",
                                                 inline=True)
                             if len(items) != 10:
                                 get_ten = 10 - len(items)

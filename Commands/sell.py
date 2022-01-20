@@ -72,7 +72,7 @@ class Sell(commands.Cog):
                                         {"$pull": {"inventory_amount": 0}})
                                 # send success message
                                 embed = discord.Embed(
-                                    description=f":white_check_mark: You sold `x{amount} {item.title()}'s` for `{currency}{price * amount}`!",
+                                    description=f":white_check_mark: You sold `x{amount} {item.title()}'s` for `{currency}{price * amount:,}`!",
                                     color=success_embed_colour)
                                 await ctx.send(embed=embed)
                                 return

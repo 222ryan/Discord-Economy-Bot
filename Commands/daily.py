@@ -26,8 +26,8 @@ class Daily(commands.Cog):
         economy.update_one({"guildid": ctx.guild.id, "id": ctx.author.id},
                            {"$set": {"money": money + config['daily']}})
         embed = discord.Embed(title="✅ Daily Claimed",
-                              description=f"{ctx.author.mention}, you have earned `{currency}{config['daily']}`!", colour=success_embed_colour)
-        embed.add_field(name="Balance", value=f"`${money + config['daily']}`")
+                              description=f"{ctx.author.mention}, you have earned `{currency}{config['daily']:,}`!", colour=success_embed_colour)
+        embed.add_field(name="Balance", value=f"`${money + config['daily']:,}`")
         embed.set_footer(text="Come back tomorrow to redeem again!")
         await ctx.send(embed=embed)
 

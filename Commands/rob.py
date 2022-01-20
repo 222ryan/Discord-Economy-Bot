@@ -33,32 +33,25 @@ class rob(commands.Cog):
         if not member.bot:
             server = economy.find({"guildid": ctx.guild.id, "id": {"$exists": True}})
             stats = economy.find_one({"guildid": ctx.guild.id, "id": ctx.author.id})
+            member_stats = economy.find_one({"guildid": ctx.guild.id, "id": member.id})
             money = stats['money']
-            amount = random.randint(10, 30)
-            users = []
-            for doc in server:
-                users.append(doc['id'])
-            if ctx.author.id in users:
-                users.remove(ctx.author.id)
+            amount = random.randint(1, (member_stats['money']))
 
-            user = random.choice(users)
-            userstats = economy.find_one({"guildid": ctx.guild.id, "id": user})
-            user_money = userstats['money']
-            if int(user_money) < amount:
+            if member_stats['money'] < amount:
                 embed = discord.Embed(description=f":x: {member.mention} has insufficient money to be robbed!", colour=error_embed_colour)
                 await ctx.send(embed=embed)
                 return
-            begs = [f"You robbed {member.mention} out of {currency}{amount}! [POSITIVE]", f"You tried robbing {member.mention}, but they ended up robbing you out of {currency}{amount} [ROB]", f"You failed to rob {member.mention} [NEGATIVE]"]
+            begs = [f"You robbed {member.mention} out of {currency}{amount:,}! [POSITIVE]", f"You tried robbing {member.mention}, but they ended up robbing you out of {currency}{amount:,} [ROB]", f"You failed to rob {member.mention} [NEGATIVE]"]
 
             begs_picker = random.choice(begs)
             positive_check = re.search("POSITIVE", begs_picker)
             negative_check = re.search("NEGATIVE", begs_picker)
             if positive_check:
-                userstats = economy.find_one({"guildid": ctx.guild.id, "id": user})
+                userstats = economy.find_one({"guildid": ctx.guild.id, "id": member_stats['id']})
                 user_money = userstats['money']
                 economy.update_one({"guildid": ctx.guild.id, "id": ctx.author.id},
                                    {"$set": {"money": money + int(amount)}})
-                economy.update_one({"guildid": ctx.guild.id, "id": int(user)},
+                economy.update_one({"guildid": ctx.guild.id, "id": int(member_stats['id'])},
                                    {"$set": {"money": user_money - int(amount)}})
                 embed = discord.Embed(description=str(begs_picker).replace("[POSITIVE]", ''), colour=embed_colour)
                 await ctx.send(embed=embed)
@@ -68,12 +61,11 @@ class rob(commands.Cog):
                 await ctx.send(embed=embed)
                 return
             if not positive_check or not negative_check:
-                userstats = economy.find_one({"guildid": ctx.guild.id, "id": user})
-                user_money = userstats['money']
-                economy.update_one({"guildid": ctx.guild.id, "id": id(user)},
-                                   {"$set": {"money": user_money + int(amount)}})
+                # remove money from author and add to member
                 economy.update_one({"guildid": ctx.guild.id, "id": ctx.author.id},
                                    {"$set": {"money": money - int(amount)}})
+                economy.update_one({"guildid": ctx.guild.id, "id": int(member_stats['id'])},
+                                   {"$set": {"money": member_stats['money'] + int(amount)}})
                 embed = discord.Embed(description=str(begs_picker).replace("[ROB]", ''), colour=embed_colour)
                 await ctx.send(embed=embed)
                 return

@@ -4,6 +4,7 @@ import discord
 from discord.ext import commands
 from ruamel.yaml import YAML
 
+import kumoslab.functions
 from Systems.Economy import economy
 from main import currency, error_embed_colour, success_embed_colour
 
@@ -29,6 +30,10 @@ class Pay(commands.Cog):
                 embed = discord.Embed(description=":x: You must state how much you want to pay!", colour=error_embed_colour)
                 await ctx.send(embed=embed)
                 return
+            if amount <= 0:
+                embed = discord.Embed(description=":x: You can't pay someone nothing!", colour=error_embed_colour)
+                await ctx.send(embed=embed)
+                return
             author = economy.find_one({"guildid": ctx.guild.id, "id": ctx.author.id})
             stats = economy.find_one({"guildid": ctx.guild.id, "id": member.id})
             if stats is None:
@@ -52,10 +57,7 @@ class Pay(commands.Cog):
                         embed.add_field(name="Balance:", value=f"`{currency}{author_money:,}`")
                         await ctx.send(embed=embed)
                     else:
-                        economy.update_one({"guildid": ctx.guild.id, "id": member.id},
-                                           {"$set": {"money": receiver + int(amount)}})
-                        economy.update_one({"guildid": ctx.guild.id, "id": ctx.author.id},
-                                           {"$set": {"money": author_money - int(amount)}})
+                        await kumoslab.functions.pay(guildid=ctx.guild.id, senderid=ctx.author.id, recieverid=member.id, amount=int(amount))
                         embed = discord.Embed(title="✅ Payment Successful!", description=f"You sent `{currency}{amount:,}` to {member.mention}!", colour=success_embed_colour)
                         embed.add_field(name="Balance", value=f"`{currency}{int(author_money) - int(amount):,}`")
                         await ctx.send(embed=embed)

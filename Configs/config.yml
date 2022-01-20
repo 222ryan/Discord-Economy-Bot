@@ -50,13 +50,13 @@ slots_cap: 100000
 # ======================================================================================
 
 # The item being sold in the shop
-items: ["Stock", "Computer", "Fishing Rod", "Ide License", "Server", "Leash"]
+items: ["Stock", "Computer", "Fishing Rod", "Ide License", "Server", "Leash", "Small Vault", "Medium Vault", "Large Vault"]
 
 # The price of the item
-prices: [1000, 100000, 500, 30000, 25000, 250]
+prices: [1000, 100000, 500, 30000, 25000, 250, 10000, 100000, 1000000]
 
 # The description of the item
-description: ["Required for **Shop Owner**", "Required for **Programmer**", "Required for **Fisher**", "Required for **Programmer**", "Required for **Programmer**", "Required for **Dog Walker**"]
+description: ["Required for **Shop Owner**", "Required for **Programmer**", "Required for **Fisher**", "Required for **Programmer**", "Required for **Programmer**", "Required for **Dog Walker**", "Stores **$20,000**", "Stores **$300,000**", "Stores **$10,000,000**"]
 
 # ======================================================================================
 #                                   JOBS
@@ -109,7 +109,7 @@ embed_colour: 0xffffff
 error_embed_colour: 0xFF7F7F
 
 # Success Embed Colour | Must Be Hex Notation
-success_embed_colour: 0x32CD32
+success_embed_colour: 0x77DD77
 
 
 # ======================================================================================

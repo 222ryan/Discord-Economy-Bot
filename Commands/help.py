@@ -38,7 +38,8 @@ class help(commands.Cog):
                                       f"🧎‍♂️  beg - Beg for money and receive potential a positive or a negative result\n"
                                       f"☀️ daily - Receive your Daily Reward of {config['daily']}\n"
                                       f"💸 pay <@user> <amount> [message] - Pay another user an amount of money"
-                                      f"\n💰 rob <@user> - Attempt to rob another user```")
+                                      f"\n💰 rob <@user> - Attempt to rob another user"
+                                      f"\n⛓️ crime - Attempts to commit a crime, but is the risk worth it?```")
                 await ctx.send(embed=embed)
             elif helptype.lower() == "gambling":
                 embed = discord.Embed(title=f":game_die: Gambling Commands",

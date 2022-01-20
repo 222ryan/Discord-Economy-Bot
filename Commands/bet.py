@@ -32,7 +32,7 @@ class Gamble(commands.Cog):
                 await ctx.send(embed=embed)
                 return
             if amount > config['black_red_cap']:
-                embed = discord.Embed(description=f":x: **Betting Machine** only supports bets up to `{currency}{config['black_red_cap']}`!")
+                embed = discord.Embed(description=f":x: **Betting Machine** only supports bets up to `{currency}{config['black_red_cap']:,}`!")
                 await ctx.send(embed=embed)
                 return
             stats = economy.find_one({"guildid": ctx.guild.id, "id": ctx.author.id})
@@ -40,13 +40,13 @@ class Gamble(commands.Cog):
             bet_money = int(amount)
             if int(money) < int(amount):
                 embed = discord.Embed(description=":x: You have insufficient funds!")
-                embed.add_field(name="Balance:", value=f"`{currency}{money}`")
+                embed.add_field(name="Balance:", value=f"`{currency}{money}:,`")
                 await ctx.send(embed=embed)
                 return
             economy.update_one({"guildid": ctx.guild.id, "id": ctx.author.id},
                                {"$set": {"money": int(money) - int(amount)}})
             if bet.lower() == "red":
-                embed = discord.Embed(title=f"Betting Machine | {currency}{amount} on {bet.upper()}")
+                embed = discord.Embed(title=f"Betting Machine | {currency}{amount:,} on {bet.upper()}")
                 embed.set_footer(text=f"Member Betting: {ctx.author}")
                 message = await ctx.send(embed=embed)
                 colour = random.choice(['⚫', '🔴'])
@@ -56,18 +56,18 @@ class Gamble(commands.Cog):
                 if colour == "🔴":
                     economy.update_one({"guildid": ctx.guild.id, "id": ctx.author.id},
                                        {"$set": {"money": money + bet_money}})
-                    embed.add_field(name="WINNER!", value=f"You won `{currency}{bet_money}`")
-                    embed.add_field(name="Balance:", value=f"`{currency}{money + int(bet_money)}`")
+                    embed.add_field(name="WINNER!", value=f"You won `{currency}{bet_money:,}`")
+                    embed.add_field(name="Balance:", value=f"`{currency}{money + int(bet_money):,}`")
                     await message.edit(embed=embed)
                 else:
                     economy.update_one({"guildid": ctx.guild.id, "id": ctx.author.id},
                                        {"$set": {"money": money - bet_money}})
-                    embed.add_field(name="LOSS!", value=f"You lost `{currency}{bet_money}`")
-                    embed.add_field(name="Balance:", value=f"`{currency}{money - int(bet_money)}`")
+                    embed.add_field(name="LOSS!", value=f"You lost `{currency}{bet_money:,}`")
+                    embed.add_field(name="Balance:", value=f"`{currency}{money - int(bet_money):,}`")
                     await message.edit(embed=embed)
                     return
             elif bet.lower() == "black":
-                embed = discord.Embed(title=f"Betting Machine | {currency}{amount} on {bet.upper()}")
+                embed = discord.Embed(title=f"Betting Machine | {currency}{amount:,} on {bet.upper()}")
                 embed.set_footer(text=f"Member Betting: {ctx.author}")
                 message = await ctx.send(embed=embed)
                 colour = random.choice(['⚫', '🔴'])
@@ -77,14 +77,14 @@ class Gamble(commands.Cog):
                 if colour == "⚫":
                     economy.update_one({"guildid": ctx.guild.id, "id": ctx.author.id},
                                        {"$set": {"money": money + bet_money}})
-                    embed.add_field(name="WINNER!", value=f"You won `{currency}{bet_money}`")
-                    embed.add_field(name="Balance:", value=f"`{currency}{money + int(bet_money)}`")
+                    embed.add_field(name="WINNER!", value=f"You won `{currency}{bet_money:,}`")
+                    embed.add_field(name="Balance:", value=f"`{currency}{money + int(bet_money):,}`")
                     await message.edit(embed=embed)
                 else:
                     economy.update_one({"guildid": ctx.guild.id, "id": ctx.author.id},
                                        {"$set": {"money": money - bet_money}})
-                    embed.add_field(name="LOSS!", value=f"You lost `{currency}{bet_money}`")
-                    embed.add_field(name="Balance:", value=f"`{currency}{money - int(bet_money)}`")
+                    embed.add_field(name="LOSS!", value=f"You lost `{currency}{bet_money:,}`")
+                    embed.add_field(name="Balance:", value=f"`{currency}{money - int(bet_money):,}`")
                     await message.edit(embed=embed)
                     return
 
@@ -112,7 +112,7 @@ class Gamble(commands.Cog):
                 await ctx.send(embed=embed)
                 return
             if bet > config['high_low_cap']:
-                embed = discord.Embed(description=f":x: **High/Low** only supports bets up to `{currency}{config['high_low_cap']}`!")
+                embed = discord.Embed(description=f":x: **High/Low** only supports bets up to `{currency}{config['high_low_cap']:,}`!")
                 await ctx.send(embed=embed)
                 return
             stats = economy.find_one({"guildid": ctx.guild.id, "id": ctx.author.id})
@@ -148,8 +148,8 @@ class Gamble(commands.Cog):
                             await message.edit(embed=embed)
                             economy.update_one({"guildid": ctx.guild.id, "id": ctx.author.id},
                                                {"$set": {"money": money + int(bet)}})
-                            embed.add_field(name="WINNER!", value=f"You won `{currency}{bet}`")
-                            embed.add_field(name="Balance:", value=f"`{currency}{money + bet}`")
+                            embed.add_field(name="WINNER!", value=f"You won `{currency}{bet:,}`")
+                            embed.add_field(name="Balance:", value=f"`{currency}{money + bet:,}`")
                             await message.edit(embed=embed)
                         else:
                             embed = discord.Embed(title=f"High/Low | {ctx.author.name} | HIGHER",
@@ -158,8 +158,8 @@ class Gamble(commands.Cog):
                             await message.edit(embed=embed)
                             economy.update_one({"guildid": ctx.guild.id, "id": ctx.author.id},
                                                {"$set": {"money": money - 100}})
-                            embed.add_field(name="LOSS!", value=f"You lost `{currency}{bet}`")
-                            embed.add_field(name="Balance:", value=f"`{currency}{money - int(bet)}`")
+                            embed.add_field(name="LOSS!", value=f"You lost `{currency}{bet:,}`")
+                            embed.add_field(name="Balance:", value=f"`{currency}{money - int(bet):,}`")
                             await message.edit(embed=embed)
                         await message.edit(embed=embed)
                         await message.remove_reaction(reaction, user)
@@ -167,13 +167,13 @@ class Gamble(commands.Cog):
                     elif str(reaction.emoji) == "⬇️":
                         if number < hint_num:
                             embed = discord.Embed(title=f"High/Low | {ctx.author.name} | LOWER",
-                                                  description=f"The secret number was **{number}**")
+                                                  description=f"The secret number was **{number:,}**")
                             embed.set_footer(text=f"Member Betting: {ctx.author}")
                             await message.edit(embed=embed)
                             economy.update_one({"guildid": ctx.guild.id, "id": ctx.author.id},
                                                {"$set": {"money": money + int(bet)}})
-                            embed.add_field(name="WINNER!", value=f"You won `{currency}{bet}`")
-                            embed.add_field(name="Balance:", value=f"`{currency}{money + bet}`")
+                            embed.add_field(name="WINNER!", value=f"You won `{currency}{bet:,}`")
+                            embed.add_field(name="Balance:", value=f"`{currency}{money + bet:,}`")
                             await message.edit(embed=embed)
                         else:
                             embed = discord.Embed(title=f"High/Low | {ctx.author.name} | LOWER",
@@ -182,8 +182,8 @@ class Gamble(commands.Cog):
                             await message.edit(embed=embed)
                             economy.update_one({"guildid": ctx.guild.id, "id": ctx.author.id},
                                                {"$set": {"money": money - int(bet)}})
-                            embed.add_field(name="LOSS!", value=f"You lost `{currency}{bet}`")
-                            embed.add_field(name="Balance:", value=f"`{currency}{money - bet}`")
+                            embed.add_field(name="LOSS!", value=f"You lost `{currency}{bet:,}`")
+                            embed.add_field(name="Balance:", value=f"`{currency}{money - bet:,}`")
                             await message.edit(embed=embed)
                         await message.remove_reaction(reaction, user)
                     elif str(reaction.emoji) == "💣":
@@ -194,8 +194,8 @@ class Gamble(commands.Cog):
                             await message.edit(embed=embed)
                             economy.update_one({"guildid": ctx.guild.id, "id": ctx.author.id},
                                                {"$set": {"money": money + int(bet * 2)}})
-                            embed.add_field(name="WINNER!", value=f"You won `{currency}{bet * 2}`")
-                            embed.add_field(name="Balance:", value=f"`{currency}{money + (bet*2)}`")
+                            embed.add_field(name="WINNER!", value=f"You won `{currency}{bet * 2:,}`")
+                            embed.add_field(name="Balance:", value=f"`{currency}{money + (bet*2):,}`")
                             await message.edit(embed=embed)
                         else:
                             embed = discord.Embed(title=f"High/Low | {ctx.author.name} | EXACT",
@@ -204,8 +204,8 @@ class Gamble(commands.Cog):
                             await message.edit(embed=embed)
                             economy.update_one({"guildid": ctx.guild.id, "id": ctx.author.id},
                                                {"$set": {"money": money - int(bet*2)}})
-                            embed.add_field(name="LOSS!", value=f"You lost `{currency}{bet*2}`")
-                            embed.add_field(name="Balance:", value=f"`{currency}{money - (bet*2)}`")
+                            embed.add_field(name="LOSS!", value=f"You lost `{currency}{bet*2:,}`")
+                            embed.add_field(name="Balance:", value=f"`{currency}{money - (bet*2):,}`")
                             await message.edit(embed=embed)
                     else:
                         await message.remove_reaction(reaction, user)
@@ -231,7 +231,7 @@ class Gamble(commands.Cog):
                 await ctx.send(embed=embed)
                 return
             if bet > config['slots_cap']:
-                embed = discord.Embed(description=f":x: **Slots** only supports bets up to `{currency}{config['slots_cap']}`")
+                embed = discord.Embed(description=f":x: **Slots** only supports bets up to `{currency}{config['slots_cap']:,}`")
                 await ctx.send(embed=embed)
                 return
             slots = ["🍊", "🍐", "🍋", "🍉", "🍇", "🍓", "🍒", "🍍"]
@@ -249,25 +249,25 @@ class Gamble(commands.Cog):
                                    {"$set": {"money": economy.find_one({"guildid": ctx.guild.id, "id": ctx.author.id})[
                                                           "money"] + int(bet * 2)}})
                 embed.add_field(name="$$ JACKPOT $$", value=f"You won `"
-                                                            f"{currency}{bet * 2}`")
+                                                            f"{currency}{bet * 2:,}`")
                 embed.add_field(name="Balance:",
-                                value=f'`{currency}{economy.find_one({"guildid": ctx.guild.id, "id": ctx.author.id})["money"]}`')
+                                value=f'`{currency}{economy.find_one({"guildid": ctx.guild.id, "id": ctx.author.id})["money"]:,}`')
                 await message.edit(embed=embed)
             elif slots1 == slots2 or slots2 == slots3 or slots1 == slots3:
                 economy.update_one({"guildid": ctx.guild.id, "id": ctx.author.id},
                                    {"$set": {"money": economy.find_one({"guildid": ctx.guild.id, "id": ctx.author.id})[
                                                           "money"] + int(bet)}})
-                embed.add_field(name="$$ GREAT $$", value=f"You won `{currency}{bet}`")
+                embed.add_field(name="$$ GREAT $$", value=f"You won `{currency}{bet:,}`")
                 embed.add_field(name="Balance:",
-                                value=f'`{currency}{economy.find_one({"guildid": ctx.guild.id, "id": ctx.author.id})["money"]}`')
+                                value=f'`{currency}{economy.find_one({"guildid": ctx.guild.id, "id": ctx.author.id})["money"]:,}`')
                 await message.edit(embed=embed)
             else:
                 economy.update_one({"guildid": ctx.guild.id, "id": ctx.author.id},
                                    {"$set": {"money": economy.find_one({"guildid": ctx.guild.id, "id": ctx.author.id})[
                                                           "money"] - int(bet)}})
-                embed.add_field(name="LOSS!", value=f"You lost `{currency}{bet}`")
+                embed.add_field(name="LOSS!", value=f"You lost `{currency}{bet:,}`")
                 embed.add_field(name="Balance:",
-                                value=f'`{currency}{economy.find_one({"guildid": ctx.guild.id, "id": ctx.author.id})["money"]}`')
+                                value=f'`{currency}{economy.find_one({"guildid": ctx.guild.id, "id": ctx.author.id})["money"]:,}`')
                 await message.edit(embed=embed)
 
 

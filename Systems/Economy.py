@@ -54,12 +54,12 @@ class Economy(commands.Cog):
                 user = economy.find_one({"guildid": guild.id, "id": member.id})
                 if user:
                     economy.update_one({"guildid": guild.id, "id": member.id},
-                                       {"$set": {"money": int(config['starting_money']), "job": "None", "daily_income": 0, "name": f"{member.name}", "inventory": [], "inventory_amount": []}})
+                                       {"$set": {"money": int(config['starting_money']), "job": "None", "daily_income": 0, "name": f"{member.name}", "inventory": [], "inventory_amount": [], 'small_vault': 0, 'medium_vault': 0, 'large_vault': 0}})
                     print(f"[Modern Economy] User: {member} already found in database, Updating Fields.")
                 else:
                     newuser = {"guildid": member.guild.id, "id": member.id,
                                "money": int(config['starting_money']),
-                               "job": "None", "daily_income": 0, "name": f"{member.name}", "inventory": [], "inventory_amount": []}
+                               "job": "None", "daily_income": 0, "name": f"{member.name}", "inventory": [], "inventory_amount": [], 'small_vault': 0, 'medium_vault': 0, 'large_vault': 0}
                     economy.insert_one(newuser)
                     print(f"[Modern Economy] User: {member} has been added to the Database!")
 
@@ -79,12 +79,12 @@ class Economy(commands.Cog):
             user = economy.find_one({"guildid": member.guild.id, "id": member.id})
             if user:
                 economy.update_one({"guildid": member.guild.id, "id": member.id},
-                                   {"$set": {"money": int(config['starting_money']), "job": "None", "daily_income": 0, "name": f"{member.name}", "inventory": [], "inventory_amount": []}})
+                                   {"$set": {"money": int(config['starting_money']), "job": "None", "daily_income": 0, "name": f"{member.name}", "inventory": [], "inventory_amount": [], 'small_vault': 0, 'medium_vault': 0, 'large_vault': 0}})
                 print(f"[Modern Economy] User: {member} already found in database, Updating Fields.")
             else:
                 newuser = {"guildid": member.guild.id, "id": member.id,
                            "money": int(config['starting_money']),
-                           "job": "None", "daily_income": 0, "inventory": [], "inventory_amount": []}
+                           "job": "None", "daily_income": 0, "inventory": [], "inventory_amount": [], 'small_vault': 0, 'medium_vault': 0, 'large_vault': 0}
                 economy.insert_one(newuser)
                 print(f"[Modern Economy] User: {member} has been added to the Database!")
 

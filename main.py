@@ -68,6 +68,12 @@ async def on_ready():
                 if x:
                     economy.update_one({'guildid': member.guild.id, 'id': x['id']}, {'$set': {'name': str(member)}})
                     print(f"[Modern Economy] User {member} was missing NAME - Automatically added it!")
+            vault_check = economy.find({'guildid': member.guild.id, 'id': member.id, 'small_vault': {'$exists': False},
+                                       "job_type": {'$exists': False}})
+            for x in vault_check:
+                if x:
+                    economy.update_one({'guildid': member.guild.id, 'id': x['id']}, {'$set': {'small_vault': 0, 'medium_vault': 0, 'large_vault': 0}})
+                    print(f"[Modern Economy] User {member} was missing VAULTS - Automatically added it!")
 
 
 logging.info("------------- Loading -------------")
