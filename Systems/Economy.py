@@ -28,19 +28,19 @@ class Economy(commands.Cog):
 
     @commands.Cog.listener()
     async def on_guild_join(self, guild):
+        overwrites = {
+            guild.default_role: discord.PermissionOverwrite(read_messages=False),
+            guild.me: discord.PermissionOverwrite(read_messages=True)
+        }
+        prefix = config['Prefix']
+        embed = discord.Embed(title=f"👋 // Greetings, {guild.name}",
+                              description=f"Thanks for inviting me, my prefix here is: `{prefix}`")
+        embed.add_field(name="🚀 | What's Next?",
+                        value=f"`{prefix}help` displays every command you need to know for {self.client.user.mention}",
+                        inline=False)
+        embed.add_field(name="🧭 | Important Links:",
+                        value=f"[Support Server](https://www.discord.gg/E56eZdNjK4) - Get support for {self.client.user.mention}")
         if config['private_message'] is True:
-            overwrites = {
-                guild.default_role: discord.PermissionOverwrite(read_messages=False),
-                guild.me: discord.PermissionOverwrite(read_messages=True)
-            }
-            prefix = config['Prefix']
-            embed = discord.Embed(title=f"👋 // Greetings, {guild.name}",
-                                  description=f"Thanks for inviting me, my prefix here is: `{prefix}`")
-            embed.add_field(name="🚀 | What's Next?",
-                            value=f"`{prefix}help` displays every command you need to know for {self.client.user.mention}",
-                            inline=False)
-            embed.add_field(name="🧭 | Important Links:",
-                            value=f"[Support Server](https://www.discord.gg/E56eZdNjK4) - Get support for {self.client.user.mention}")
             if guild.system_channel is None:
                 await guild.create_text_channel('private', overwrites=overwrites)
                 channel = discord.utils.get(guild.channels, name="private")
@@ -62,6 +62,30 @@ class Economy(commands.Cog):
                                "job": "None", "daily_income": 0, "name": f"{member.name}", "inventory": [], "inventory_amount": [], 'small_vault': 0, 'medium_vault': 0, 'large_vault': 0}
                     economy.insert_one(newuser)
                     print(f"[Modern Economy] User: {member} has been added to the Database!")
+
+
+    @commands.command()
+    async def databaseregister(self, ctx):
+        if ctx.author.id == config['bot_owner_id']:
+            for guild in self.client.guilds:
+                for member in guild.members:
+                    if not member.bot:
+                        user = economy.find_one({"guildid": guild.id, "id": member.id})
+                        if user:
+                            economy.update_one({"guildid": guild.id, "id": member.id},
+                                               {"$set": {"money": int(config['starting_money']), "job": "None",
+                                                         "daily_income": 0, "name": f"{member.name}", "inventory": [],
+                                                         "inventory_amount": [], 'small_vault': 0, 'medium_vault': 0,
+                                                         'large_vault': 0}})
+                            print(f"[Modern Economy] User: {member} already found in database, Updating Fields.")
+                        else:
+                            newuser = {"guildid": guild.id, "id": member.id,
+                                       "money": int(config['starting_money']),
+                                       "job": "None", "daily_income": 0, "name": f"{member.name}", "inventory": [],
+                                       "inventory_amount": [], 'small_vault': 0, 'medium_vault': 0, 'large_vault': 0}
+                            economy.insert_one(newuser)
+                            print(f"[Modern Economy] User: {member} has been added to the Database!")
+                await ctx.send("Database has been updated!")
 
     @commands.Cog.listener()
     async def on_guild_remove(self, guild):
