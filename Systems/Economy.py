@@ -67,25 +67,72 @@ class Economy(commands.Cog):
     @commands.command()
     async def databaseregister(self, ctx):
         if ctx.author.id == config['bot_owner_id']:
-            for guild in self.client.guilds:
-                for member in guild.members:
-                    if not member.bot:
-                        user = economy.find_one({"guildid": guild.id, "id": member.id})
-                        if user:
-                            economy.update_one({"guildid": guild.id, "id": member.id},
-                                               {"$set": {"money": int(config['starting_money']), "job": "None",
-                                                         "daily_income": 0, "name": f"{member.name}", "inventory": [],
-                                                         "inventory_amount": [], 'small_vault': 0, 'medium_vault': 0,
-                                                         'large_vault': 0}})
-                            print(f"[Modern Economy] User: {member} already found in database, Updating Fields.")
-                        else:
-                            newuser = {"guildid": guild.id, "id": member.id,
-                                       "money": int(config['starting_money']),
-                                       "job": "None", "daily_income": 0, "name": f"{member.name}", "inventory": [],
-                                       "inventory_amount": [], 'small_vault': 0, 'medium_vault': 0, 'large_vault': 0}
-                            economy.insert_one(newuser)
-                            print(f"[Modern Economy] User: {member} has been added to the Database!")
-                await ctx.send("Database has been updated!")
+            embed = discord.Embed(title="❓ // ARE YOU SURE?", description="This will do the following: \n\n➤ Reset Every Users Money ✅\n➤ Quit Every Users Jobs ✅\n➤ Reset The Leaderbaord ✅\n➤ Reset any stats to do with Modern Levels ❌")
+            message = await ctx.send(embed=embed)
+
+            # allow the user to react to the message
+            await message.add_reaction("✅")
+            await message.add_reaction("❌")
+
+            # check if yes or no is reacted to
+            def check(reaction, user):
+                return user == ctx.author and str(reaction.emoji) in ["✅", "❌"]
+
+            # wait for a reaction
+            try:
+                reaction, user = await self.client.wait_for("reaction_add", timeout=60.0, check=check)
+
+                # if the user reacted with yes
+                if str(reaction.emoji) == "✅":
+                    await ctx.send("Registering all users in the database... This may take some time.")
+                    for guild in self.client.guilds:
+                        for member in guild.members:
+                            if not member.bot:
+                                user = economy.find_one({"guildid": guild.id, "id": member.id})
+                                if user:
+                                    economy.update_one({"guildid": guild.id, "id": member.id},
+                                                       {"$set": {"money": int(config['starting_money']), "job": "None",
+                                                                 "daily_income": 0, "name": f"{member}", "inventory": [],
+                                                                 "inventory_amount": [], 'small_vault': 0, 'medium_vault': 0,
+                                                                 'large_vault': 0}})
+                                    print(f"[Modern Economy] User: {member} already found in database, Updating Fields.")
+                                    jobs = economy.find_one({"guildid": guild.id, "id": member.id, "job_type": {"$exists": True}})
+                                    if jobs:
+                                        economy.delete_one(jobs)
+                                else:
+                                    newuser = {"guildid": guild.id, "id": member.id,
+                                               "money": int(config['starting_money']),
+                                               "job": "None", "daily_income": 0, "name": f"{member}", "inventory": [],
+                                               "inventory_amount": [], 'small_vault': 0, 'medium_vault': 0, 'large_vault': 0}
+                                    economy.insert_one(newuser)
+                                    print(f"[Modern Economy] User: {member} has been added to the Database!")
+
+                    embed = discord.Embed(title=f"✅ // Database Register Complete")
+
+                    await message.edit(embed=embed)
+
+                    # remove reactions
+                    await message.clear_reactions()
+
+                # if the user reacted with no
+                elif str(reaction.emoji) == "❌":
+                    embed = discord.Embed(title=f"❌ // Database Register Cancelled")
+                    await message.edit(embed=embed)
+                    await message.clear_reactions()
+
+            # if the user didn't react with yes or no
+            except asyncio.TimeoutError:
+                embed = discord.Embed(title=f"❌ // Database Register Timed Out")
+                await message.edit(embed=embed)
+                await message.clear_reactions()
+
+
+
+
+
+
+
+
 
     @commands.Cog.listener()
     async def on_guild_remove(self, guild):

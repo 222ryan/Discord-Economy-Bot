@@ -31,7 +31,7 @@ class Beg(commands.Cog):
             users.remove(ctx.author.id)
         user = random.choice(users)
 
-        begs = [f"{self.client.user.mention} donated you `{currency}{amount:,}` [POSITIVE]", f"A nearby pedestrian handed you `{currency}{amount:,}` [POSITIVE]", f"You begged the wrong person and got robbed of `{currency}{amount:,}` [NEGATIVE]", f"You begged <@{user}> for money, however they ended up robbing you of `{currency}{amount:,}` [ROB]"]
+        begs = [f"{self.client.user.mention} donated you `{currency}{amount:,}` [POSITIVE]"] * 5 + [f"A nearby pedestrian handed you `{currency}{amount:,}` [POSITIVE]"] * 5 + [f"You begged the wrong person and got robbed of `{currency}{amount:,}` [NEGATIVE]"] * 2 + [f"You begged <@{user}> for money, however they ended up robbing you of `{currency}{amount:,}` [ROB]"] * 2
 
         begs_picker = random.choice(begs)
         positive_check = re.search("POSITIVE", begs_picker)

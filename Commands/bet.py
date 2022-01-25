@@ -123,7 +123,7 @@ class Gamble(commands.Cog):
                 return
             bet = int(bet)
             number = random.randint(1, 100)
-            hint_num = random.randint(1, number)
+            hint_num = random.randint(1, 100)
 
             embed = discord.Embed(title=f"High/Low | {ctx.author.name}",
                                   description=f"I just chose a secret number between `1 and 100`. \nIs the secret number higher or lower than **{hint_num}**")

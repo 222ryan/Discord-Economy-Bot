@@ -50,11 +50,9 @@ class Crime(commands.Cog):
             if str(reaction.emoji) == "🇦":
                 await message.remove_reaction(reaction, user)
                 crime = crime_a
-                print(crime)
                 if crime == "Murder":
                     messages = [
-                        f"[POSITIVE] You successfully murdered an innocent pedestrian and stole `{currency}{risk:,}`",
-                        f"[NEGATIVE] You killed a nearby pedestrian, but you were caught and fined `{currency}{risk * 2:,}`"]
+                        f"[POSITIVE] You successfully murdered an innocent pedestrian and stole `{currency}{risk:,}`"] * 5 + [f"[NEGATIVE] You killed a nearby pedestrian, but you were caught and fined `{currency}{risk * 2:,}`"] * 2
                     set_message = random.choice(messages)
                     embed = discord.Embed(title=f"{ctx.author.name} committed MURDER",
                                           description=set_message.replace("[POSITIVE]", "").replace("[NEGATIVE]", ""))
@@ -76,8 +74,7 @@ class Crime(commands.Cog):
                     await message.edit(embed=embed)
                 elif crime == "Pick Pocket":
                     await message.remove_reaction(reaction, user)
-                    messages = [f"[POSITIVE] You successfully picked pocketed `{currency}{risk:,}` from a stranger!",
-                                f"[NEGATIVE] You were caught and fined `{currency}{risk * 2:,}`"]
+                    messages = [f"[POSITIVE] You successfully picked pocketed `{currency}{risk:,}` from a stranger!"] * 5 + [f"[NEGATIVE] You were caught and fined `{currency}{risk * 2:,}`"] * 2
                     set_message = random.choice(messages)
                     embed = discord.Embed(title=f"{ctx.author.name} committed PICK POCKET",
                                           description=set_message.replace("[POSITIVE]", "").replace("[NEGATIVE]", ""))
@@ -99,8 +96,7 @@ class Crime(commands.Cog):
                     await message.edit(embed=embed)
                 elif crime == "Graffiti":
                     messages = [
-                        f"[POSITIVE] You successfully vandalized a nearby building and were given `{currency}{risk:,}` by a kind stranger!",
-                        f"[NEGATIVE] You vandalized a nearby building, but you were caught and fined `{currency}{risk * 2:,}`"]
+                        f"[POSITIVE] You successfully vandalized a nearby building and were given `{currency}{risk:,}` by a kind stranger!"] * 5 + [f"[NEGATIVE] You vandalized a nearby building, but you were caught and fined `{currency}{risk * 2:,}`"] * 2
                     set_message = random.choice(messages)
                     embed = discord.Embed(title=f"{ctx.author.name} committed VANDALISM",
                                           description=set_message.replace("[POSITIVE]", "").replace("[NEGATIVE]", ""))
@@ -122,8 +118,7 @@ class Crime(commands.Cog):
                     await message.edit(embed=embed)
                 elif crime == "Fraud":
 
-                    messages = [f"[POSITIVE] You successfully lied to an old women and stole`{currency}{risk:,}`!",
-                                f"[NEGATIVE] You accidentally called the police and were fined `{currency}{risk * 2:,}`"]
+                    messages = [f"[POSITIVE] You successfully lied to an old women and stole`{currency}{risk:,}`!"] * 5 + [f"[NEGATIVE] You accidentally called the police and were fined `{currency}{risk * 2:,}`"] * 2
                     set_message = random.choice(messages)
                     embed = discord.Embed(title=f"{ctx.author.name} committed FRAUD",
                                           description=set_message.replace("[POSITIVE]", "").replace("[NEGATIVE]", ""))
@@ -145,8 +140,7 @@ class Crime(commands.Cog):
                     await message.edit(embed=embed)
                 elif crime == "Arson":
                     messages = [
-                        f"[POSITIVE] You successfully burned down a nearby building and escaped with `{currency}{risk:,}`",
-                        f"[NEGATIVE] You burned down a nearby building, but you were caught and fined `{currency}{risk * 2:,}`"]
+                        f"[POSITIVE] You successfully burned down a nearby building and escaped with `{currency}{risk:,}`"] * 5 + [f"[NEGATIVE] You burned down a nearby building, but you were caught and fined `{currency}{risk * 2:,}`"] * 2
                     set_message = random.choice(messages)
                     embed = discord.Embed(title=f"{ctx.author.name} committed ARSON",
                                           description=set_message.replace("[POSITIVE]", "").replace("[NEGATIVE]", ""))
@@ -170,11 +164,9 @@ class Crime(commands.Cog):
             elif str(reaction.emoji) == "🇧":
                 await message.remove_reaction(reaction, user)
                 crime = crime_b
-                print(crime)
                 if crime == "Murder":
                     messages = [
-                        f"[POSITIVE] You successfully murdered an innocent pedestrian and stole `{currency}{risk:,}`",
-                        f"[NEGATIVE] You killed a nearby pedestrian, but you were caught and fined `{currency}{risk * 2:,}`"]
+                        f"[POSITIVE] You successfully murdered an innocent pedestrian and stole `{currency}{risk:,}`"] * 5 + [f"[NEGATIVE] You killed a nearby pedestrian, but you were caught and fined `{currency}{risk * 2:,}`"] * 2
                     set_message = random.choice(messages)
                     embed = discord.Embed(title=f"{ctx.author.name} committed MURDER",
                                           description=set_message.replace("[POSITIVE]", "").replace("[NEGATIVE]", ""))
@@ -195,8 +187,7 @@ class Crime(commands.Cog):
                         embed.add_field(name="Balance:", value=f"`{currency}{money['money']:,}`")
                     await message.edit(embed=embed)
                 elif crime == "Pick Pocket":
-                    messages = [f"[POSITIVE] You successfully picked pocketed `{currency}{risk:,}` from a stranger!",
-                                f"[NEGATIVE] You were caught and fined `{currency}{risk * 2:,}`"]
+                    messages = [f"[POSITIVE] You successfully picked pocketed `{currency}{risk:,}` from a stranger!"] * 5 + [f"[NEGATIVE] You were caught and fined `{currency}{risk * 2:,}`"] * 2
                     set_message = random.choice(messages)
                     embed = discord.Embed(title=f"{ctx.author.name} committed PICK POCKET",
                                           description=set_message.replace("[POSITIVE]", "").replace("[NEGATIVE]", ""))
@@ -218,8 +209,7 @@ class Crime(commands.Cog):
                     await message.edit(embed=embed)
                 elif crime == "Graffiti":
                     messages = [
-                        f"[POSITIVE] You successfully vandalized a nearby building and were given `{currency}{risk:,}` by a kind stranger!",
-                        f"[NEGATIVE] You vandalized a nearby building, but you were caught and fined `{currency}{risk * 2:,}`"]
+                        f"[POSITIVE] You successfully vandalized a nearby building and were given `{currency}{risk:,}` by a kind stranger!"] * 5 + [f"[NEGATIVE] You vandalized a nearby building, but you were caught and fined `{currency}{risk * 2:,}`"] * 2
                     set_message = random.choice(messages)
                     embed = discord.Embed(title=f"{ctx.author.name} committed VANDALISM",
                                           description=set_message.replace("[POSITIVE]", "").replace("[NEGATIVE]", ""))
@@ -241,8 +231,7 @@ class Crime(commands.Cog):
                     await message.edit(embed=embed)
                 elif crime == "Fraud":
 
-                    messages = [f"[POSITIVE] You successfully lied to an old women and stole`{currency}{risk:,}`!",
-                                f"[NEGATIVE] You accidentally called the police and were fined `{currency}{risk * 2:,}`"]
+                    messages = [f"[POSITIVE] You successfully lied to an old women and stole`{currency}{risk:,}`!"] * 5 + [f"[NEGATIVE] You accidentally called the police and were fined `{currency}{risk * 2:,}`"] * 2
                     set_message = random.choice(messages)
                     embed = discord.Embed(title=f"{ctx.author.name} committed FRAUD",
                                           description=set_message.replace("[POSITIVE]", "").replace("[NEGATIVE]", ""))
@@ -264,8 +253,7 @@ class Crime(commands.Cog):
                     await message.edit(embed=embed)
                 elif crime == "Arson":
                     messages = [
-                        f"[POSITIVE] You successfully burned down a nearby building and escaped with `{currency}{risk:,}`",
-                        f"[NEGATIVE] You burned down a nearby building, but you were caught and fined `{currency}{risk * 2:,}`"]
+                        f"[POSITIVE] You successfully burned down a nearby building and escaped with `{currency}{risk:,}`"] * 5 + [f"[NEGATIVE] You burned down a nearby building, but you were caught and fined `{currency}{risk * 2:,}`"] * 2
                     set_message = random.choice(messages)
                     embed = discord.Embed(title=f"{ctx.author.name} committed ARSON",
                                           description=set_message.replace("[POSITIVE]", "").replace("[NEGATIVE]", ""))
@@ -288,11 +276,9 @@ class Crime(commands.Cog):
 
             elif str(reaction.emoji) == "🇨":
                 crime = crime_c
-                print(crime)
                 if crime == "Murder":
                     messages = [
-                        f"[POSITIVE] You successfully murdered an innocent pedestrian and stole `{currency}{risk:,}`",
-                        f"[NEGATIVE] You killed a nearby pedestrian, but you were caught and fined `{currency}{risk * 2:,}`"]
+                        f"[POSITIVE] You successfully murdered an innocent pedestrian and stole `{currency}{risk:,}`"] * 5 + [f"[NEGATIVE] You killed a nearby pedestrian, but you were caught and fined `{currency}{risk * 2:,}`"] * 2
                     set_message = random.choice(messages)
                     embed = discord.Embed(title=f"{ctx.author.name} committed MURDER",
                                           description=set_message.replace("[POSITIVE]", "").replace("[NEGATIVE]", ""))
@@ -313,8 +299,7 @@ class Crime(commands.Cog):
                         embed.add_field(name="Balance:", value=f"`{currency}{money['money']:,}`")
                     await message.edit(embed=embed)
                 elif crime == "Pick Pocket":
-                    messages = [f"[POSITIVE] You successfully picked pocketed `{currency}{risk:,}` from a stranger!",
-                                f"[NEGATIVE] You were caught and fined `{currency}{risk * 2:,}`"]
+                    messages = [f"[POSITIVE] You successfully picked pocketed `{currency}{risk:,}` from a stranger!"] * 5 + [f"[NEGATIVE] You were caught and fined `{currency}{risk * 2:,}`"] * 2
                     set_message = random.choice(messages)
                     embed = discord.Embed(title=f"{ctx.author.name} committed PICK POCKET",
                                           description=set_message.replace("[POSITIVE]", "").replace("[NEGATIVE]", ""))
@@ -336,8 +321,7 @@ class Crime(commands.Cog):
                     await message.edit(embed=embed)
                 elif crime == "Graffiti":
                     messages = [
-                        f"[POSITIVE] You successfully vandalized a nearby building and were given `{currency}{risk:,}` by a kind stranger!",
-                        f"[NEGATIVE] You vandalized a nearby building, but you were caught and fined `{currency}{risk * 2:,}`"]
+                        f"[POSITIVE] You successfully vandalized a nearby building and were given `{currency}{risk:,}` by a kind stranger!"] * 5 + [f"[NEGATIVE] You vandalized a nearby building, but you were caught and fined `{currency}{risk * 2:,}`"] * 2
                     set_message = random.choice(messages)
                     embed = discord.Embed(title=f"{ctx.author.name} committed VANDALISM",
                                           description=set_message.replace("[POSITIVE]", "").replace("[NEGATIVE]", ""))
@@ -359,8 +343,7 @@ class Crime(commands.Cog):
                     await message.edit(embed=embed)
                 elif crime == "Fraud":
 
-                    messages = [f"[POSITIVE] You successfully lied to an old women and stole`{currency}{risk:,}`!",
-                                f"[NEGATIVE] You accidentally called the police and were fined `{currency}{risk * 2:,}`"]
+                    messages = [f"[POSITIVE] You successfully lied to an old women and stole`{currency}{risk:,}`!"] * 5 + [f"[NEGATIVE] You accidentally called the police and were fined `{currency}{risk * 2:,}`"] * 2
                     set_message = random.choice(messages)
                     embed = discord.Embed(title=f"{ctx.author.name} committed FRAUD",
                                           description=set_message.replace("[POSITIVE]", "").replace("[NEGATIVE]", ""))
@@ -382,8 +365,7 @@ class Crime(commands.Cog):
                     await message.edit(embed=embed)
                 elif crime == "Arson":
                     messages = [
-                        f"[POSITIVE] You successfully burned down a nearby building and escaped with `{currency}{risk:,}`",
-                        f"[NEGATIVE] You burned down a nearby building, but you were caught and fined `{currency}{risk * 2:,}`"]
+                        f"[POSITIVE] You successfully burned down a nearby building and escaped with `{currency}{risk:,}`"] * 5 + [f"[NEGATIVE] You burned down a nearby building, but you were caught and fined `{currency}{risk * 2:,}`"] * 2
                     set_message = random.choice(messages)
                     embed = discord.Embed(title=f"{ctx.author.name} committed ARSON",
                                           description=set_message.replace("[POSITIVE]", "").replace("[NEGATIVE]", ""))

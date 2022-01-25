@@ -5,6 +5,7 @@ import discord
 from discord.ext import commands
 from ruamel.yaml import YAML
 
+import kumoslab.functions
 from Systems.Economy import economy
 from main import currency, error_embed_colour, embed_colour
 
@@ -35,13 +36,17 @@ class rob(commands.Cog):
             stats = economy.find_one({"guildid": ctx.guild.id, "id": ctx.author.id})
             member_stats = economy.find_one({"guildid": ctx.guild.id, "id": member.id})
             money = stats['money']
-            amount = random.randint(1, (member_stats['money']))
-
-            if member_stats['money'] < amount:
-                embed = discord.Embed(description=f":x: {member.mention} has insufficient money to be robbed!", colour=error_embed_colour)
+            money = await kumoslab.functions.getmoney(userid=member.id, guildid=ctx.guild.id)
+            print(money)
+            if int(money) <= 0:
+                embed = discord.Embed(description=f":x: {member.mention} has no money to be robbed!",
+                                      colour=error_embed_colour)
                 await ctx.send(embed=embed)
                 return
-            begs = [f"You robbed {member.mention} out of {currency}{amount:,}! [POSITIVE]", f"You tried robbing {member.mention}, but they ended up robbing you out of {currency}{amount:,} [ROB]", f"You failed to rob {member.mention} [NEGATIVE]"]
+
+            amount = random.randint(1, (member_stats['money']))
+
+            begs = [f"You robbed {member.mention} out of {currency}{amount:,}! [POSITIVE]"] * 5 + [f"You tried robbing {member.mention}, but they ended up robbing you out of {currency}{amount:,} [ROB]"] * 2 + [f"You failed to rob {member.mention} [NEGATIVE]"] * 2
 
             begs_picker = random.choice(begs)
             positive_check = re.search("POSITIVE", begs_picker)
