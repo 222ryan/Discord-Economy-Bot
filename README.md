@@ -14,6 +14,8 @@ Please be aware of a few things. You must use `Python v3.5` and up. You will als
 
 `Modern Levels` is available with Modern Economy integration! Get it [here.](https://github.com/KumosLab/Discord-Levels-Bot)
 
+`Modern Economy` also has a **Trello** page! Check it out to see all upcoming features [here.](https://trello.com/b/YVxv61af/modern-economy)
+
 # Features
 ![](https://cdn.discordapp.com/attachments/831180817064656907/904430488641474650/MODERN_LEVELS_1.png)
 
