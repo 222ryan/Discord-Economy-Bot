@@ -8,7 +8,7 @@
 <p align="center">
 	  Welcome to Modern Economy  </p>
 
-Please be aware of a few things. You must use `Python v3.5` and up. You will also be required to have a `MongoDB` Database for this to work. Please also keep in mind that there is currently **1** branch, ``Main``. 
+Please be aware of a few things. You must use `Python v3.8` and up. You will also be required to have a `MongoDB` Database for this to work. Please also keep in mind that there is currently **1** branch, ``Main``. 
 	  
 *Running into problems? Want to submit a bug report or suggestion? Join our [Support Server](https://discord.gg/E56eZdNjK4)*
 
